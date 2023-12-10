@@ -37,6 +37,7 @@ namespace WinFormsApp1
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
             Settings.chatfilter = checkBox1.Checked;
+            Logger.log("Toggled chatfilter to: " + checkBox1.Checked, "SETTINGS");
         }
     }
 }

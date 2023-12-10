@@ -41,7 +41,11 @@ namespace WinFormsApp1
                     {
                         if(s.StartsWith(reason + ";" + punishments[i].Item3))
                         {
-                            return Convert.ToInt32(s.Split(';')[2]);
+                            string secs = s.Split(';')[2];
+                            Logger.log("Punishing " + username + " due to " + reason + " x" + punishments[i].Item3 + " --> " + secs, "PUNISH");
+
+                            if (secs == "ban") return -1;
+                            return Convert.ToInt32(secs);
                         }
                     }
 

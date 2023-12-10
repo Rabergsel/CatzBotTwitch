@@ -69,14 +69,32 @@ namespace WinFormsApp1
 
         private void checkMessage(object sender, OnMessageReceivedArgs e)
         {
-
-            var msg = e.ChatMessage.Message.ToLower();
-            bool mustBeDeleted = ChatFilter.containsBadWord(msg);
-
-            if(mustBeDeleted)
+            try
             {
-                client.DeleteMessage(Settings.channel_name, e.ChatMessage);
-                client.TimeoutUser(Settings.channel_name, e.ChatMessage.Username, TimeSpan.FromMinutes(1), "It seems like you used a bad word. You now have been timeouted!");
+                if (!Settings.chatfilter) return;
+
+                var msg = e.ChatMessage.Message.ToLower();
+                bool mustBeDeleted = ChatFilter.containsBadWord(msg);
+
+                if (mustBeDeleted)
+                {
+                    Logger.log("Deleting msg \"" + msg + "\" by " + e.ChatMessage.Username, "CHATFILTER");
+                    client.TimeoutUser(client.JoinedChannels[0], e.ChatMessage.Username, TimeSpan.FromSeconds(10));
+                    client.DeleteMessage(client.JoinedChannels[0], e.ChatMessage);
+                    var secs = Punishment.punishUser(e.ChatMessage.Username, "BADWORD");
+                    Logger.log("Taking action against " + e.ChatMessage.Username + ":\t" + secs, "ACTION");
+                    if (secs == -1) client.BanUser(client.JoinedChannels[0], e.ChatMessage.Username, "You have violated the rules of this channel to often. You have been banned!");
+                    else
+                    {
+                        client.SendMessage(client.JoinedChannels[0], "/timeout " + e.ChatMessage.Username + " " + secs);
+                        client.TimeoutUser(client.JoinedChannels[0], e.ChatMessage.Username, TimeSpan.FromSeconds(secs));
+
+                    }
+                }
+            }
+            catch(Exception ex)
+            {
+                Logger.log(ex.ToString(), "ERROR");
             }
 
 

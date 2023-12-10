@@ -18,6 +18,7 @@ namespace WinFormsApp1
                 {
                     if (msg.ToLower().Contains(s.ToLower())) return true;
                 }
+
                 return false;
             }
 
