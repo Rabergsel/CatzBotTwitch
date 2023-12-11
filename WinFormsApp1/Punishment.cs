@@ -43,7 +43,6 @@ namespace WinFormsApp1
                         {
                             string secs = s.Split(';')[2];
                             Logger.log("Punishing " + username + " due to " + reason + " x" + punishments[i].Item3 + " --> " + secs, "PUNISH");
-
                             if (secs == "ban") return -1;
                             return Convert.ToInt32(secs);
                         }

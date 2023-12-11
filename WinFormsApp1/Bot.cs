@@ -32,7 +32,7 @@ namespace WinFormsApp1
 
         public Bot()
         {
-            ConnectionCredentials credentials = new ConnectionCredentials(Settings.channel_name, Settings.token);
+            ConnectionCredentials credentials = new ConnectionCredentials(Settings.model.channel_name, Settings.model.token);
             var clientOptions = new ClientOptions
             {
                 MessagesAllowedInPeriod = 750,
@@ -40,7 +40,7 @@ namespace WinFormsApp1
             };
             WebSocketClient customClient = new WebSocketClient(clientOptions);
             client = new TwitchClient(customClient);
-            client.Initialize(credentials, Settings.channel_name);
+            client.Initialize(credentials, Settings.model.channel_name);
             client.OnConnected += Client_OnConnected;
             client.OnMessageReceived += TTSMsg;
             client.OnMessageReceived += Counter;
@@ -51,10 +51,10 @@ namespace WinFormsApp1
             try
             {
                 api = new TwitchAPI();
-                api.Settings.ClientId = Settings.APIclientID;
-                api.Settings.AccessToken = Settings.APIsecret;
+                api.Settings.ClientId = Settings.model.APIclientID;
+                api.Settings.AccessToken = Settings.model.APIsecret;
                 Monitor = new LiveStreamMonitorService(api, 20);
-                List<string> lst = new List<string> { Settings.channel_name };
+                List<string> lst = new List<string> { Settings.model.channel_name };
                 Monitor.SetChannelsByName(lst);
 
                 Monitor.Start();
@@ -71,7 +71,7 @@ namespace WinFormsApp1
         {
             try
             {
-                if (!Settings.chatfilter) return;
+                if (!Settings.model.chatfilter) return;
 
                 var msg = e.ChatMessage.Message.ToLower();
                 bool mustBeDeleted = ChatFilter.containsBadWord(msg);
@@ -102,14 +102,14 @@ namespace WinFormsApp1
 
         private void Client_OnConnected(object sender, OnConnectedArgs e)
         {
-            client.SendMessage(Settings.channel_name, "Hey, THE BOT IS ONLINE!");
+            client.SendMessage(Settings.model.channel_name, "Hey, THE BOT IS ONLINE!");
         }
 
         private void Counter(object sender, OnMessageReceivedArgs e)
         {
-            if (e.ChatMessage.Message.ToLower().Trim() == "l") Settings.L_counter.addOccurence();
-            if (e.ChatMessage.Message.ToLower().Trim() == "w") Settings.W_counter.addOccurence();
-            if (e.ChatMessage.Message.ToLower().Trim() == "gg") Settings.GG_counter.addOccurence();
+            if (e.ChatMessage.Message.ToLower().Trim() == "l") Settings.model.L_counter.addOccurence();
+            if (e.ChatMessage.Message.ToLower().Trim() == "w") Settings.model.W_counter.addOccurence();
+            if (e.ChatMessage.Message.ToLower().Trim() == "gg") Settings.model.GG_counter.addOccurence();
         }
 
         private void stats(object sender, OnMessageReceivedArgs e)
@@ -120,7 +120,7 @@ namespace WinFormsApp1
 
         private void TTSMsg(object sender, OnMessageReceivedArgs e)
         {
-            if(Settings.tts)
+            if(Settings.model.tts)
             {
                 var synthesis = new System.Speech.Synthesis.SpeechSynthesizer();
                 synthesis.Speak(e.ChatMessage.Username + ": " +  e.ChatMessage.Message);

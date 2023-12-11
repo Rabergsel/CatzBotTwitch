@@ -9,13 +9,14 @@ namespace WinFormsApp1
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            connectionLabel.Text = "Connected to: " + Settings.channel_name;
-            ttsActivated.Checked = Settings.tts;
+            connectionLabel.Text = "Connected to: " + Settings.model.channel_name;
+            ttsActivated.Checked = Settings.model.tts;
+            checkBox1.Checked = Settings.model.chatfilter;
         }
 
         private void ttsActivated_CheckedChanged(object sender, EventArgs e)
         {
-            Settings.tts = ttsActivated.Checked;
+            Settings.model.tts = ttsActivated.Checked;
         }
 
         private void connectionToolStripMenuItem_Click(object sender, EventArgs e)
@@ -36,7 +37,7 @@ namespace WinFormsApp1
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
-            Settings.chatfilter = checkBox1.Checked;
+            Settings.model.chatfilter = checkBox1.Checked;
             Logger.log("Toggled chatfilter to: " + checkBox1.Checked, "SETTINGS");
         }
     }

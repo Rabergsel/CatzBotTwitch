@@ -6,22 +6,23 @@ using System.Threading.Tasks;
 
 namespace WinFormsApp1
 {
+
     public class Settings
     {
-        public static Bot bot;
+        public static SettingsModel model { get; set; }
 
-        public static string channel_name = File.ReadAllText("./settings/channel.txt");
-        public static string token = File.ReadAllText("./settings/token.txt");
-        public static string APIclientID = File.ReadAllLines("./settings/APIAuth.txt")[0];
-        public static string APIsecret = File.ReadAllLines("./settings/APIAuth.txt")[1];
+        public static void save()
+        {
+            File.WriteAllText("./settings/settings.json", System.Text.Json.JsonSerializer.Serialize(model, typeof(SettingsModel), new System.Text.Json.JsonSerializerOptions()
+            {
+                WriteIndented = true
+            }));
+        }
 
-        public static bool tts = true;
-        public static bool chatfilter = true;
-
-        public static RateCounter W_counter = new RateCounter();
-        public static RateCounter L_counter = new RateCounter();
-        public static RateCounter GG_counter = new RateCounter();
-
+        public static void load()
+        {
+            model = System.Text.Json.JsonSerializer.Deserialize<SettingsModel>(File.ReadAllText("./settings/settings.json"));
+        }
 
         public static async Task RunInBackground(TimeSpan timeSpan, Action action)
         {
@@ -31,6 +32,41 @@ namespace WinFormsApp1
                 action();
             }
         }
+
+    }
+
+    public class SettingsModel
+    {
+        [System.Text.Json.Serialization.JsonIgnore]
+        public Bot bot;
+
+        public string channel_name { get; set; }
+        public string token { get; set; }
+        public string APIclientID { get; set; }
+        public string APIsecret {get; set; }
+
+        public bool tts {get; set; }
+        public bool chatfilter {get; set; }
+
+        [System.Text.Json.Serialization.JsonIgnore]
+        public RateCounter W_counter = new RateCounter();
+        [System.Text.Json.Serialization.JsonIgnore]
+        public RateCounter L_counter = new RateCounter();
+        [System.Text.Json.Serialization.JsonIgnore]
+        public RateCounter GG_counter = new RateCounter();
+
+
+        public SettingsModel()
+        {
+            channel_name = "channel name";
+            token = "token";
+            APIclientID = "Client ID for API";
+            APIsecret = "API secret for client";
+            tts = false;
+            chatfilter = true;
+        }
+
+
 
     }
 }
