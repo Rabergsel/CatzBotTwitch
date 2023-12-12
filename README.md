@@ -1,6 +1,9 @@
 # CatzBot for Twitch
 A simple chat bot for Twitch
 
+Get Support here: https://discord.com/invite/r9jCkyq4bG
+
+
 ## Setting it up
 The following steps are required to set up the chatbot:
 
