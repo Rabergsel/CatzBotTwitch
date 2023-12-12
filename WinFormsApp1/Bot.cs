@@ -52,16 +52,19 @@ namespace WinFormsApp1
             {
                 api = new TwitchAPI();
                 api.Settings.ClientId = Settings.model.APIclientID;
-                api.Settings.AccessToken = Settings.model.APIsecret;
+                api.Settings.AccessToken = Settings.model.APIaccess;
+
+
                 Monitor = new LiveStreamMonitorService(api, 20);
                 List<string> lst = new List<string> { Settings.model.channel_name };
                 Monitor.SetChannelsByName(lst);
-
                 Monitor.Start();
-            }
-            catch
-            {
 
+                Logger.log("API started without any problems!", "SYSTEM");
+            }
+            catch(Exception ex)
+            {
+                Logger.log("API had problems to connect! " + ex, "ERROR");
             }
             client.Connect();
 
@@ -71,25 +74,37 @@ namespace WinFormsApp1
         {
             try
             {
-                if (!Settings.model.chatfilter) return;
-
+                //if (!Settings.model.chatfilter) return;
+                Logger.log("Checking msg " + e.ChatMessage.Message, "DEBUG");
                 var msg = e.ChatMessage.Message.ToLower();
                 bool mustBeDeleted = ChatFilter.containsBadWord(msg);
-
+                string broadcasterID = Settings.model.broadcasterID;
+                if (Settings.model.botIsBroadcaster & e.ChatMessage.IsBroadcaster)
+                {
+                    broadcasterID = e.ChatMessage.UserId;
+                    if (Settings.model.broadcasterID != broadcasterID)
+                    {
+                        Settings.model.broadcasterID = broadcasterID;
+                        client.SendMessage(client.JoinedChannels[0], "The broadcaster ID has now been set.\nThis means that the chatfilter is now active!");
+                    }
+                }
                 if (mustBeDeleted)
                 {
-                    Logger.log("Deleting msg \"" + msg + "\" by " + e.ChatMessage.Username, "CHATFILTER");
-                    client.TimeoutUser(client.JoinedChannels[0], e.ChatMessage.Username, TimeSpan.FromSeconds(10));
-                    client.DeleteMessage(client.JoinedChannels[0], e.ChatMessage);
+                    api.Helix.Moderation.DeleteChatMessagesAsync(broadcasterID, broadcasterID, e.ChatMessage.Id, Settings.model.APIaccess);
                     var secs = Punishment.punishUser(e.ChatMessage.Username, "BADWORD");
-                    Logger.log("Taking action against " + e.ChatMessage.Username + ":\t" + secs, "ACTION");
+                    
                     if (secs == -1) client.BanUser(client.JoinedChannels[0], e.ChatMessage.Username, "You have violated the rules of this channel to often. You have been banned!");
                     else
                     {
-                        client.SendMessage(client.JoinedChannels[0], "/timeout " + e.ChatMessage.Username + " " + secs);
-                        client.TimeoutUser(client.JoinedChannels[0], e.ChatMessage.Username, TimeSpan.FromSeconds(secs));
-
+                        api.Helix.Moderation.BanUserAsync(broadcasterID, broadcasterID, new TwitchLib.Api.Helix.Models.Moderation.BanUser.BanUserRequest()
+                        {
+                            Duration = Math.Max(30, secs),
+                            UserId = e.ChatMessage.UserId,
+                            Reason = "Penalty for violating rules"
+                        }, Settings.model.APIaccess);
                     }
+                    Logger.log("Deleting msg \"" + msg + "\" by " + e.ChatMessage.Username, "CHATFILTER");
+                    Logger.log("Taking action against " + e.ChatMessage.Username + ":\t" + secs, "ACTION");
                 }
             }
             catch(Exception ex)

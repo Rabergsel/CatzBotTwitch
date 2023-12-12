@@ -33,6 +33,22 @@ namespace WinFormsApp1
             }
         }
 
+        public static void generateFileStructure()
+        {
+            if (File.Exists("setup.ok")) return;
+            Directory.CreateDirectory("./files");
+            Directory.CreateDirectory("./logs");
+            Directory.CreateDirectory("./settings");
+            Directory.CreateDirectory("./counter");
+            File.WriteAllText("./settings/settings.json", System.Text.Json.JsonSerializer.Serialize(new SettingsModel(), typeof(SettingsModel), new System.Text.Json.JsonSerializerOptions()
+            {
+                WriteIndented = true
+            }));
+            File.WriteAllText("./settings/punishments.txt", "REASON;minCount;maxCount;secsTimeout (-1=ban)");
+            File.WriteAllText("./settings/badwords.txt", "Write each badword into a line.");
+            File.Create("setup.ok");
+        }
+
     }
 
     public class SettingsModel
@@ -45,8 +61,12 @@ namespace WinFormsApp1
         public string APIclientID { get; set; }
         public string APIsecret {get; set; }
 
+        public string APIaccess { get; set; }
+
         public bool tts {get; set; }
         public bool chatfilter {get; set; }
+        public bool botIsBroadcaster {get; set; }
+        public string broadcasterID { get; set; }
 
         [System.Text.Json.Serialization.JsonIgnore]
         public RateCounter W_counter = new RateCounter();
@@ -64,6 +84,8 @@ namespace WinFormsApp1
             APIsecret = "API secret for client";
             tts = false;
             chatfilter = true;
+            botIsBroadcaster = true;
+            broadcasterID = "broadcaster ID (numerical value assigned by twitch)";
         }
 
 

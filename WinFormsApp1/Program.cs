@@ -8,27 +8,44 @@ namespace WinFormsApp1
         [STAThread]
         static void Main()
         {
-            Punishment.load();
-            Logger.filename = "./logs/" + DateTime.Now.ToString().Replace(' ', '_').Replace(".","").Replace(":", "") + "_LOG.txt";
-            Logger.log("Started bot!", "SYSTEM");
             try
             {
-                Settings.load();
-            }
-            catch
-            {
-                Settings.model = new SettingsModel();
-                Settings.save();
-            }
+                Settings.generateFileStructure();
+                try
+                {
+                    Punishment.load("./files/punishedUsers.txt");
+                }
+                catch
+                {
+                    Punishment.punishments = new List<PunishmentRecord>();
+                    File.WriteAllText("./files/punishedUsers.txt", Punishment.save());
+                }
+                Logger.filename = "./logs/" + DateTime.Now.ToString().Replace(' ', '_').Replace(".", "").Replace(":", "") + "_LOG.txt";
+                Logger.log("Started bot!", "SYSTEM");
+                try
+                {
+                    Settings.load();
+                }
+                catch
+                {
+                    Settings.model = new SettingsModel();
+                    Settings.save();
+                }
 
-            Settings.model.bot = new Bot();
-            Settings.RunInBackground(TimeSpan.FromSeconds(3), () => outputCounter());
-            Settings.RunInBackground(TimeSpan.FromSeconds(120), () => outputCounter());
-            Settings.RunInBackground(TimeSpan.FromSeconds(30), () => outputCounter());
-            // To customize application configuration such as set high DPI settings or default font,
-            // see https://aka.ms/applicationconfiguration.
-            ApplicationConfiguration.Initialize();
-            Application.Run(new Form1());
+                Settings.model.bot = new Bot();
+                Settings.RunInBackground(TimeSpan.FromSeconds(3), () => outputCounter());
+                Settings.RunInBackground(TimeSpan.FromSeconds(120), () => savePunishments());
+                Settings.RunInBackground(TimeSpan.FromSeconds(30), () => saveSettings());
+                // To customize application configuration such as set high DPI settings or default font,
+                // see https://aka.ms/applicationconfiguration.
+                ApplicationConfiguration.Initialize();
+                Application.Run(new Form1());
+            }
+            catch(Exception ex)
+            {
+                Logger.log("ERROR: " + ex, "CRASH");
+                MessageBox.Show("It seems like an error occured:\n" + ex + "\n\nPlease report this error with your logfile to the developers. They may help you!");
+            }
         }
 
 
@@ -46,7 +63,7 @@ namespace WinFormsApp1
         public static void savePunishments()
         {
             string text = Punishment.save();
-            File.WriteAllText("./settings/punishedUsers.txt", text);
+            File.WriteAllText("./files/punishedUsers.txt", text);
             Logger.log("Saved all punishments ( =" + text.Length + " bytes)", "SYSTEM");
         }
 

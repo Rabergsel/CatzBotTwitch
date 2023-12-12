@@ -8,19 +8,12 @@ namespace WinFormsApp1
 {
     public static class Punishment
     {
-        public static List<Tuple<string, string, int>> punishments {get; set;}
+        public static List<PunishmentRecord> punishments {get; set;}
         public static string[] setPunished = File.ReadAllLines("./settings/punishments.txt");
 
-        public static void load()
+        public static void load(string path)
         {
-            try
-            {
-                punishments = System.Text.Json.JsonSerializer.Deserialize<List<Tuple<string, string, int>>>(File.ReadAllText("./settings/punishedUsers.txt"));
-            }
-            catch (Exception ex)
-            {
-                punishments = new List<Tuple<string, string, int>>();
-            }
+            punishments =  System.Text.Json.JsonSerializer.Deserialize<List<PunishmentRecord>>(File.ReadAllText(path));
         }
 
         public static string save()
@@ -28,37 +21,41 @@ namespace WinFormsApp1
             return System.Text.Json.JsonSerializer.Serialize(punishments);
         }
 
-        public static int punishUser(string username, string reason)
+        public static int punishUser(string username, string reason, int generalPunishmentSec = 60)
         {
-            for(int i = 0; i < punishments.Count; i++)
+            int punishmentNr = 1;
+            bool found = false;
+           foreach(var record in punishments)
             {
-                var p = punishments[i];
-
-                if(punishments[i].Item1 == username & punishments[i].Item2 == reason)
+                if(record.username == username)
                 {
-                    punishments[i] = new Tuple<string, string, int>(username, reason, punishments[i].Item3+1);
-                    foreach(var s in setPunished)
-                    {
-                        if(s.StartsWith(reason + ";" + punishments[i].Item3))
-                        {
-                            string secs = s.Split(';')[2];
-                            Logger.log("Punishing " + username + " due to " + reason + " x" + punishments[i].Item3 + " --> " + secs, "PUNISH");
-                            if (secs == "ban") return -1;
-                            return Convert.ToInt32(secs);
-                        }
-                    }
+                    punishmentNr = record.increasePunishmentCounter(reason);
+                    found = true;
+                    break;
+                }
+            }
+           if(!found)
+            {
+                punishments.Add(new PunishmentRecord() { username = username });
+            }
 
-                    foreach (var s in setPunished)
-                    {
-                        if (s.StartsWith(reason + ";x;"))
-                        {
-                            return Convert.ToInt32(s.Split(';')[2]);
-                        }
-                    }
+            foreach (var s in setPunished)
+            {
+                var _reason = s.Split(';')[0];
+                var _numberLow = int.Parse(s.Split(';')[1]);
+                var _numberHigh = int.Parse(s.Split(';')[2]);
+                var _secs = int.Parse(s.Split(';')[3]);
+
+                if(_reason.ToLower() == reason.ToLower()
+                    & _numberLow <= punishmentNr
+                    & _numberHigh > punishmentNr)
+                {
+                    return _secs;
                 }
 
             }
-            return 0;
+
+            return generalPunishmentSec;
 
         }
 
