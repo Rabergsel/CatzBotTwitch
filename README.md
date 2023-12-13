@@ -3,6 +3,8 @@ A simple chat bot for Twitch
 
 Get Support here: https://discord.com/invite/r9jCkyq4bG
 
+If you got an idea what should be added, please open an issue here on github with the title beginning with "Feature Request" or "FR:", or head over to my discord server.
+
 
 ## Setting it up
 The following steps are required to set up the chatbot:
