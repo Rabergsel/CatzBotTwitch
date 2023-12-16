@@ -74,11 +74,16 @@ namespace WinFormsApp1
         {
             try
             {
-                //if (!Settings.model.chatfilter) return;
                 Logger.log("Checking msg " + e.ChatMessage.Message, "DEBUG");
                 var msg = e.ChatMessage.Message.ToLower();
-                bool mustBeDeleted = ChatFilter.containsBadWord(msg);
+                bool mustBeDeleted = false;
+
+                if(Settings.model.chatfilter) mustBeDeleted = ChatFilter.containsBadWord(msg);
+                if (Settings.model.useDisguisedBadwordDetector & !mustBeDeleted) mustBeDeleted = ChatFilter.containsDisguisedBadWord(msg, Settings.model.LevenshteinDistanceThreshold);
+
                 string broadcasterID = Settings.model.broadcasterID;
+
+
                 if (Settings.model.botIsBroadcaster & e.ChatMessage.IsBroadcaster)
                 {
                     broadcasterID = e.ChatMessage.UserId;

@@ -67,6 +67,10 @@ namespace WinFormsApp1
         public bool chatfilter {get; set; }
         public bool botIsBroadcaster {get; set; }
         public string broadcasterID { get; set; }
+        public bool excludeModerators { get; set; }
+
+        public bool useDisguisedBadwordDetector { get; set; }
+        public int LevenshteinDistanceThreshold { get; set; }
 
         [System.Text.Json.Serialization.JsonIgnore]
         public RateCounter W_counter = new RateCounter();
@@ -86,6 +90,10 @@ namespace WinFormsApp1
             chatfilter = true;
             botIsBroadcaster = true;
             broadcasterID = "broadcaster ID (numerical value assigned by twitch)";
+            excludeModerators = true;
+
+            useDisguisedBadwordDetector = true;
+            LevenshteinDistanceThreshold = 1;
         }
 
 
