@@ -40,5 +40,23 @@ namespace WinFormsApp1
             Settings.model.chatfilter = checkBox1.Checked;
             Logger.log("Toggled chatfilter to: " + checkBox1.Checked, "SETTINGS");
         }
+
+        private void checkBox2_CheckedChanged(object sender, EventArgs e)
+        {
+            Settings.model.useDisguisedBadwordDetector = checkBox2.Checked;
+            Logger.log("Toggled disguised chatfilter to: " + checkBox1.Checked, "SETTINGS");
+        }
+
+        private void label1_Click_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void trackBar1_Scroll(object sender, EventArgs e)
+        {
+            Settings.model.LevenshteinDistanceThreshold = trackBar1.Value;
+            textBox1.Text = trackBar1.Value.ToString();
+            Logger.log("Toggled Levenshtein threshold to: " + trackBar1.Value, "SETTINGS");
+        }
     }
 }
