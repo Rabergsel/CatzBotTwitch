@@ -6,7 +6,7 @@ namespace WinFormsApp1
         ///  The main entry point for the application.
         /// </summary>
         [STAThread]
-        static void Main()
+        private static void Main()
         {
             try
             {
@@ -41,7 +41,7 @@ namespace WinFormsApp1
                 ApplicationConfiguration.Initialize();
                 Application.Run(new Form1());
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Logger.log("ERROR: " + ex, "CRASH");
                 MessageBox.Show("It seems like an error occured:\n" + ex + "\n\nPlease report this error with your logfile to the developers. They may help you!");
@@ -58,7 +58,7 @@ namespace WinFormsApp1
             File.WriteAllText("./counter/GG_counter.txt", Settings.model.GG_counter.occurencesInTimeSpan(60).ToString());
             //File.WriteAllText("massstats.txt", Settings.bot.massStats());
             System.Diagnostics.Debug.WriteLine("Output");
-            
+
         }
         public static void savePunishments()
         {
@@ -71,7 +71,7 @@ namespace WinFormsApp1
         {
             Settings.save();
         }
-        
+
 
     }
 }

@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace WinFormsApp1
+﻿namespace WinFormsApp1
 {
     public class PunishmentRecord
     {
@@ -13,8 +7,14 @@ namespace WinFormsApp1
 
         public int increasePunishmentCounter(string reason)
         {
-            if(punishmentsByReason.ContainsKey(reason)) punishmentsByReason[reason]++;
-            else punishmentsByReason.Add(reason, 1);
+            if (punishmentsByReason.ContainsKey(reason))
+            {
+                punishmentsByReason[reason]++;
+            }
+            else
+            {
+                punishmentsByReason.Add(reason, 1);
+            }
 
             return punishmentsByReason[reason];
         }
@@ -28,7 +28,7 @@ namespace WinFormsApp1
         public PunishmentRecord(string username, Dictionary<string, int> punishementsByReason)
         {
             this.username = username;
-            this.punishmentsByReason = punishementsByReason;
+            punishmentsByReason = punishementsByReason;
         }
     }
 }

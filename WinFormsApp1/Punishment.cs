@@ -1,19 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace WinFormsApp1
+﻿namespace WinFormsApp1
 {
     public static class Punishment
     {
-        public static List<PunishmentRecord> punishments {get; set;}
+        public static List<PunishmentRecord> punishments { get; set; }
         public static string[] setPunished = File.ReadAllLines("./settings/punishments.txt");
 
         public static void load(string path)
         {
-            punishments =  System.Text.Json.JsonSerializer.Deserialize<List<PunishmentRecord>>(File.ReadAllText(path));
+            punishments = System.Text.Json.JsonSerializer.Deserialize<List<PunishmentRecord>>(File.ReadAllText(path));
         }
 
         public static string save()
@@ -25,16 +19,16 @@ namespace WinFormsApp1
         {
             int punishmentNr = 1;
             bool found = false;
-           foreach(var record in punishments)
+            foreach (var record in punishments)
             {
-                if(record.username == username)
+                if (record.username == username)
                 {
                     punishmentNr = record.increasePunishmentCounter(reason);
                     found = true;
                     break;
                 }
             }
-           if(!found)
+            if (!found)
             {
                 punishments.Add(new PunishmentRecord() { username = username });
             }
@@ -46,7 +40,7 @@ namespace WinFormsApp1
                 var _numberHigh = int.Parse(s.Split(';')[2]);
                 var _secs = int.Parse(s.Split(';')[3]);
 
-                if(_reason.ToLower() == reason.ToLower()
+                if (_reason.ToLower() == reason.ToLower()
                     & _numberLow <= punishmentNr
                     & _numberHigh > punishmentNr)
                 {

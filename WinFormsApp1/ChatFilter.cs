@@ -1,37 +1,37 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace WinFormsApp1
+﻿namespace WinFormsApp1
 {
     public class ChatFilter
     {
         public static string[] badwords = File.ReadAllLines("./settings/badwords.txt");
 
-            
-            public static bool containsBadWord(string msg)
+
+        public static bool containsBadWord(string msg)
+        {
+
+            foreach (var s in badwords)
             {
-
-                foreach(var s in badwords)
+                if (msg.ToLower().Contains(s.ToLower()))
                 {
-                    if (msg.ToLower().Contains(s.ToLower())) return true;
+                    return true;
                 }
-
-                return false;
             }
 
-            public static bool containsDisguisedBadWord(string msg, int threshold)
+            return false;
+        }
+
+        public static bool containsDisguisedBadWord(string msg, int threshold)
         {
             foreach (var s in badwords)
             {
-                if(CalculateLevenshteinDistance(msg, s) <= threshold) return true;
+                if (CalculateLevenshteinDistance(msg, s) <= threshold)
+                {
+                    return true;
+                }
             }
             return false;
         }
 
-        
+
         private static int CalculateLevenshteinDistance(string s, string t)
         {
             int n = s.Length;

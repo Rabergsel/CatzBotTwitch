@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace WinFormsApp1
+﻿namespace WinFormsApp1
 {
 
     public class Settings
@@ -35,7 +29,11 @@ namespace WinFormsApp1
 
         public static void generateFileStructure()
         {
-            if (File.Exists("setup.ok")) return;
+            if (File.Exists("setup.ok"))
+            {
+                return;
+            }
+
             Directory.CreateDirectory("./files");
             Directory.CreateDirectory("./logs");
             Directory.CreateDirectory("./settings");
@@ -59,13 +57,13 @@ namespace WinFormsApp1
         public string channel_name { get; set; }
         public string token { get; set; }
         public string APIclientID { get; set; }
-        public string APIsecret {get; set; }
+        public string APIsecret { get; set; }
 
         public string APIaccess { get; set; }
 
-        public bool tts {get; set; }
-        public bool chatfilter {get; set; }
-        public bool botIsBroadcaster {get; set; }
+        public bool tts { get; set; }
+        public bool chatfilter { get; set; }
+        public bool botIsBroadcaster { get; set; }
         public string broadcasterID { get; set; }
         public bool excludeModerators { get; set; }
 

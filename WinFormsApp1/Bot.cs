@@ -1,34 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
+using TwitchLib.Api;
+using TwitchLib.Api.Services;
 using TwitchLib.Client;
-using TwitchLib.Client.Enums;
 using TwitchLib.Client.Events;
 using TwitchLib.Client.Extensions;
 using TwitchLib.Client.Models;
 using TwitchLib.Communication.Clients;
 using TwitchLib.Communication.Models;
 
-using TwitchLib.Api;
-using TwitchLib.Api.Services;
-using TwitchLib.Api.Services.Events;
-using TwitchLib.Api.Services.Events.LiveStreamMonitor;
-
-using System.IO;
-
 namespace WinFormsApp1
 {
     public class Bot
     {
-        TwitchClient client;
-
-        TwitchAPI api;
+        private TwitchClient client;
+        private TwitchAPI api;
         private LiveStreamMonitorService Monitor;
-
-        Dictionary<string, int> msgCounter = new Dictionary<string, int>();
+        private Dictionary<string, int> msgCounter = new Dictionary<string, int>();
 
         public Bot()
         {
@@ -46,7 +33,7 @@ namespace WinFormsApp1
             client.OnMessageReceived += Counter;
             client.OnMessageReceived += stats;
             client.OnMessageReceived += checkMessage;
-            
+
 
             try
             {
@@ -62,7 +49,7 @@ namespace WinFormsApp1
 
                 Logger.log("API started without any problems!", "SYSTEM");
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Logger.log("API had problems to connect! " + ex, "ERROR");
             }
@@ -78,8 +65,15 @@ namespace WinFormsApp1
                 var msg = e.ChatMessage.Message.ToLower();
                 bool mustBeDeleted = false;
 
-                if(Settings.model.chatfilter) mustBeDeleted = ChatFilter.containsBadWord(msg);
-                if (Settings.model.useDisguisedBadwordDetector & !mustBeDeleted) mustBeDeleted = ChatFilter.containsDisguisedBadWord(msg, Settings.model.LevenshteinDistanceThreshold);
+                if (Settings.model.chatfilter)
+                {
+                    mustBeDeleted = ChatFilter.containsBadWord(msg);
+                }
+
+                if (Settings.model.useDisguisedBadwordDetector & !mustBeDeleted)
+                {
+                    mustBeDeleted = ChatFilter.containsDisguisedBadWord(msg, Settings.model.LevenshteinDistanceThreshold);
+                }
 
                 string broadcasterID = Settings.model.broadcasterID;
 
@@ -97,8 +91,11 @@ namespace WinFormsApp1
                 {
                     api.Helix.Moderation.DeleteChatMessagesAsync(broadcasterID, broadcasterID, e.ChatMessage.Id, Settings.model.APIaccess);
                     var secs = Punishment.punishUser(e.ChatMessage.Username, "BADWORD");
-                    
-                    if (secs == -1) client.BanUser(client.JoinedChannels[0], e.ChatMessage.Username, "You have violated the rules of this channel to often. You have been banned!");
+
+                    if (secs == -1)
+                    {
+                        client.BanUser(client.JoinedChannels[0], e.ChatMessage.Username, "You have violated the rules of this channel to often. You have been banned!");
+                    }
                     else
                     {
                         api.Helix.Moderation.BanUserAsync(broadcasterID, broadcasterID, new TwitchLib.Api.Helix.Models.Moderation.BanUser.BanUserRequest()
@@ -112,7 +109,7 @@ namespace WinFormsApp1
                     Logger.log("Taking action against " + e.ChatMessage.Username + ":\t" + secs, "ACTION");
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Logger.log(ex.ToString(), "ERROR");
             }
@@ -127,23 +124,40 @@ namespace WinFormsApp1
 
         private void Counter(object sender, OnMessageReceivedArgs e)
         {
-            if (e.ChatMessage.Message.ToLower().Trim() == "l") Settings.model.L_counter.addOccurence();
-            if (e.ChatMessage.Message.ToLower().Trim() == "w") Settings.model.W_counter.addOccurence();
-            if (e.ChatMessage.Message.ToLower().Trim() == "gg") Settings.model.GG_counter.addOccurence();
+            if (e.ChatMessage.Message.ToLower().Trim() == "l")
+            {
+                Settings.model.L_counter.addOccurence();
+            }
+
+            if (e.ChatMessage.Message.ToLower().Trim() == "w")
+            {
+                Settings.model.W_counter.addOccurence();
+            }
+
+            if (e.ChatMessage.Message.ToLower().Trim() == "gg")
+            {
+                Settings.model.GG_counter.addOccurence();
+            }
         }
 
         private void stats(object sender, OnMessageReceivedArgs e)
         {
-            if (msgCounter.ContainsKey(e.ChatMessage.Username)) msgCounter[e.ChatMessage.Username]++;
-            else msgCounter.Add(e.ChatMessage.Username, 0);
+            if (msgCounter.ContainsKey(e.ChatMessage.Username))
+            {
+                msgCounter[e.ChatMessage.Username]++;
+            }
+            else
+            {
+                msgCounter.Add(e.ChatMessage.Username, 0);
+            }
         }
 
         private void TTSMsg(object sender, OnMessageReceivedArgs e)
         {
-            if(Settings.model.tts)
+            if (Settings.model.tts)
             {
                 var synthesis = new System.Speech.Synthesis.SpeechSynthesizer();
-                synthesis.Speak(e.ChatMessage.Username + ": " +  e.ChatMessage.Message);
+                synthesis.Speak(e.ChatMessage.Username + ": " + e.ChatMessage.Message);
             }
         }
     }
