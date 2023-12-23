@@ -38,6 +38,8 @@
             this.trackBar1 = new System.Windows.Forms.TrackBar();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.moderationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.punishmentsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
             this.SuspendLayout();
@@ -67,7 +69,8 @@
             // 
             this.menuStrip1.BackColor = System.Drawing.SystemColors.AppWorkspace;
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.settingsToolStripMenuItem});
+            this.settingsToolStripMenuItem,
+            this.moderationToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(299, 24);
@@ -138,6 +141,21 @@
             this.label1.Text = "Levenshtein distance (lower = more similiar)";
             this.label1.Click += new System.EventHandler(this.label1_Click_1);
             // 
+            // moderationToolStripMenuItem
+            // 
+            this.moderationToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.punishmentsToolStripMenuItem});
+            this.moderationToolStripMenuItem.Name = "moderationToolStripMenuItem";
+            this.moderationToolStripMenuItem.Size = new System.Drawing.Size(81, 20);
+            this.moderationToolStripMenuItem.Text = "Moderation";
+            // 
+            // punishmentsToolStripMenuItem
+            // 
+            this.punishmentsToolStripMenuItem.Name = "punishmentsToolStripMenuItem";
+            this.punishmentsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.punishmentsToolStripMenuItem.Text = "Punishments";
+            this.punishmentsToolStripMenuItem.Click += new System.EventHandler(this.punishmentsToolStripMenuItem_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -154,7 +172,7 @@
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.Text = "CatzBot Twitch";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
@@ -176,5 +194,7 @@
         private TrackBar trackBar1;
         private TextBox textBox1;
         private Label label1;
+        private ToolStripMenuItem moderationToolStripMenuItem;
+        private ToolStripMenuItem punishmentsToolStripMenuItem;
     }
 }

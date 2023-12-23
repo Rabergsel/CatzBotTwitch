@@ -58,5 +58,12 @@ namespace WinFormsApp1
             textBox1.Text = trackBar1.Value.ToString();
             Logger.log("Toggled Levenshtein threshold to: " + trackBar1.Value, "SETTINGS");
         }
+
+        private void punishmentsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            TwitchBot.Forms.PunishmentEditor editor = new TwitchBot.Forms.PunishmentEditor();
+            editor.ShowDialog();
+
+        }
     }
 }
