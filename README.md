@@ -31,22 +31,12 @@ The following steps are required to set up the chatbot:
    
    2.6. Write one message. It will the set the broadcasterID to your twitch ID. This will be acknowledged by a message.
 
-This is the default settings.JSON
-``` JSON
-  {
-    "channel_name": "channel name",
-    "token": "token",
-    "APIclientID": "Client ID for API",
-    "APIsecret": "API secret for client",
-    "APIaccess": null,
-    "tts": false,
-    "chatfilter": true,
-    "botIsBroadcaster": true,
-    "broadcasterID": "broadcaster ID (numerical value assigned by twitch)"
-  }
-```
 
 ## Punishment setup
+
+### Update since Release 1.2.0-beta: GUI Option
+Since the Release of the beta v1.2.0 you can now find a punishment editor under Moderation --> Punishment. Make sure your file is empty before using it the first time. The GUI should be self explanatory.
+
 If you head to the punishments.txt file, you are able to configure all the punishments.
 The file will have the following format:
 
