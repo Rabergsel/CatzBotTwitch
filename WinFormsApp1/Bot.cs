@@ -171,10 +171,30 @@ namespace WinFormsApp1
 
         private void TTSMsg(object sender, OnMessageReceivedArgs e)
         {
-            if (Settings.model.tts)
+            if (Settings.model.tts
+                & !e.ChatMessage.Message.StartsWith(Settings.model.commandPrefix)
+                )
             {
                 var synthesis = new System.Speech.Synthesis.SpeechSynthesizer();
-                synthesis.Speak(e.ChatMessage.Username + ": " + e.ChatMessage.Message);
+
+                if (e.ChatMessage.Message.Contains("www."))
+                {
+                    synthesis.Speak(e.ChatMessage.Username + ": URL Link");
+                }
+                else if(e.ChatMessage.Message.Length < 2)
+                {
+                    //Leave empty, don't read!
+                }
+                else if(e.ChatMessage.Message.Length > 150)
+                {
+                    synthesis.Speak(e.ChatMessage.Username + ": Long Message");
+                }
+                else
+                {
+                    synthesis.Speak(e.ChatMessage.Username + ": " + e.ChatMessage.Message);
+                }
+                
+                
             }
         }
     }
