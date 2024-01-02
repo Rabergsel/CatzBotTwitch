@@ -33,16 +33,16 @@
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.connectionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.linkCommandsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.moderationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.punishmentsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.checkBox2 = new System.Windows.Forms.CheckBox();
-            this.trackBar1 = new System.Windows.Forms.TrackBar();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.levenshteinSetter = new System.Windows.Forms.TrackBar();
+            this.LevenshteinDisplay = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.linkCommandsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.levenshteinSetter)).BeginInit();
             this.SuspendLayout();
             // 
             // connectionLabel
@@ -90,9 +90,16 @@
             // connectionToolStripMenuItem
             // 
             this.connectionToolStripMenuItem.Name = "connectionToolStripMenuItem";
-            this.connectionToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.connectionToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
             this.connectionToolStripMenuItem.Text = "Connection";
             this.connectionToolStripMenuItem.Click += new System.EventHandler(this.connectionToolStripMenuItem_Click);
+            // 
+            // linkCommandsToolStripMenuItem
+            // 
+            this.linkCommandsToolStripMenuItem.Name = "linkCommandsToolStripMenuItem";
+            this.linkCommandsToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
+            this.linkCommandsToolStripMenuItem.Text = "Link Commands";
+            this.linkCommandsToolStripMenuItem.Click += new System.EventHandler(this.linkCommandsToolStripMenuItem_Click);
             // 
             // moderationToolStripMenuItem
             // 
@@ -131,22 +138,22 @@
             this.checkBox2.UseVisualStyleBackColor = true;
             this.checkBox2.CheckedChanged += new System.EventHandler(this.checkBox2_CheckedChanged);
             // 
-            // trackBar1
+            // levenshteinSetter
             // 
-            this.trackBar1.LargeChange = 3;
-            this.trackBar1.Location = new System.Drawing.Point(68, 149);
-            this.trackBar1.Maximum = 20;
-            this.trackBar1.Name = "trackBar1";
-            this.trackBar1.Size = new System.Drawing.Size(219, 45);
-            this.trackBar1.TabIndex = 5;
-            this.trackBar1.Scroll += new System.EventHandler(this.trackBar1_Scroll);
+            this.levenshteinSetter.LargeChange = 3;
+            this.levenshteinSetter.Location = new System.Drawing.Point(68, 149);
+            this.levenshteinSetter.Maximum = 20;
+            this.levenshteinSetter.Name = "levenshteinSetter";
+            this.levenshteinSetter.Size = new System.Drawing.Size(219, 45);
+            this.levenshteinSetter.TabIndex = 5;
+            this.levenshteinSetter.Scroll += new System.EventHandler(this.trackBar1_Scroll);
             // 
-            // textBox1
+            // LevenshteinDisplay
             // 
-            this.textBox1.Location = new System.Drawing.Point(12, 149);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(50, 23);
-            this.textBox1.TabIndex = 6;
+            this.LevenshteinDisplay.Location = new System.Drawing.Point(12, 149);
+            this.LevenshteinDisplay.Name = "LevenshteinDisplay";
+            this.LevenshteinDisplay.Size = new System.Drawing.Size(50, 23);
+            this.LevenshteinDisplay.TabIndex = 6;
             // 
             // label1
             // 
@@ -158,13 +165,6 @@
             this.label1.Text = "Levenshtein distance (lower = more similiar)";
             this.label1.Click += new System.EventHandler(this.label1_Click_1);
             // 
-            // linkCommandsToolStripMenuItem
-            // 
-            this.linkCommandsToolStripMenuItem.Name = "linkCommandsToolStripMenuItem";
-            this.linkCommandsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.linkCommandsToolStripMenuItem.Text = "Link Commands";
-            this.linkCommandsToolStripMenuItem.Click += new System.EventHandler(this.linkCommandsToolStripMenuItem_Click);
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -172,8 +172,8 @@
             this.BackColor = System.Drawing.SystemColors.ControlDarkDark;
             this.ClientSize = new System.Drawing.Size(299, 420);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.textBox1);
-            this.Controls.Add(this.trackBar1);
+            this.Controls.Add(this.LevenshteinDisplay);
+            this.Controls.Add(this.levenshteinSetter);
             this.Controls.Add(this.checkBox2);
             this.Controls.Add(this.checkBox1);
             this.Controls.Add(this.ttsActivated);
@@ -185,7 +185,7 @@
             this.Load += new System.EventHandler(this.Form1_Load);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.levenshteinSetter)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -200,8 +200,8 @@
         private ToolStripMenuItem connectionToolStripMenuItem;
         private CheckBox checkBox1;
         private CheckBox checkBox2;
-        private TrackBar trackBar1;
-        private TextBox textBox1;
+        private TrackBar levenshteinSetter;
+        private TextBox LevenshteinDisplay;
         private Label label1;
         private ToolStripMenuItem moderationToolStripMenuItem;
         private ToolStripMenuItem punishmentsToolStripMenuItem;

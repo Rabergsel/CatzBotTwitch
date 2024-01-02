@@ -12,6 +12,13 @@ namespace WinFormsApp1
             connectionLabel.Text = "Connected to: " + Settings.model.channel_name;
             ttsActivated.Checked = Settings.model.tts;
             checkBox1.Checked = Settings.model.chatfilter;
+            checkBox2.Checked = Settings.model.useDisguisedBadwordDetector;
+
+            levenshteinSetter.Value = Settings.model.LevenshteinDistanceThreshold;
+            LevenshteinDisplay.Text = Settings.model.LevenshteinDistanceThreshold.ToString();
+
+            levenshteinSetter.Enabled = checkBox2.Checked;
+            LevenshteinDisplay.Enabled = checkBox2.Checked;
         }
 
         private void ttsActivated_CheckedChanged(object sender, EventArgs e)
@@ -45,6 +52,9 @@ namespace WinFormsApp1
         {
             Settings.model.useDisguisedBadwordDetector = checkBox2.Checked;
             Logger.log("Toggled disguised chatfilter to: " + checkBox1.Checked, "SETTINGS");
+
+            levenshteinSetter.Enabled = checkBox2.Checked;
+            LevenshteinDisplay.Enabled = checkBox2.Checked;
         }
 
         private void label1_Click_1(object sender, EventArgs e)
@@ -54,9 +64,9 @@ namespace WinFormsApp1
 
         private void trackBar1_Scroll(object sender, EventArgs e)
         {
-            Settings.model.LevenshteinDistanceThreshold = trackBar1.Value;
-            textBox1.Text = trackBar1.Value.ToString();
-            Logger.log("Toggled Levenshtein threshold to: " + trackBar1.Value, "SETTINGS");
+            Settings.model.LevenshteinDistanceThreshold = levenshteinSetter.Value;
+            LevenshteinDisplay.Text = levenshteinSetter.Value.ToString();
+            Logger.log("Toggled Levenshtein threshold to: " + levenshteinSetter.Value, "SETTINGS");
         }
 
         private void punishmentsToolStripMenuItem_Click(object sender, EventArgs e)
