@@ -67,8 +67,13 @@
         public string broadcasterID { get; set; }
         public bool excludeModerators { get; set; }
 
+        public string dcLink { get; set; }
+        public string ytLink { get; set; }
+
         public bool useDisguisedBadwordDetector { get; set; }
         public int LevenshteinDistanceThreshold { get; set; }
+
+        public string commandPrefix { get; set; }
 
         [System.Text.Json.Serialization.JsonIgnore]
         public RateCounter W_counter = new RateCounter();
@@ -89,6 +94,11 @@
             botIsBroadcaster = true;
             broadcasterID = "broadcaster ID (numerical value assigned by twitch)";
             excludeModerators = true;
+
+            dcLink = "";
+            ytLink = "";
+
+            commandPrefix = "!";
 
             useDisguisedBadwordDetector = true;
             LevenshteinDistanceThreshold = 1;

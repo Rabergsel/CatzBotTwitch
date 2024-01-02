@@ -33,7 +33,7 @@ namespace WinFormsApp1
             client.OnMessageReceived += Counter;
             client.OnMessageReceived += stats;
             client.OnMessageReceived += checkMessage;
-
+            client.OnMessageReceived += linkCommands;
 
             try
             {
@@ -137,6 +137,23 @@ namespace WinFormsApp1
             if (e.ChatMessage.Message.ToLower().Trim() == "gg")
             {
                 Settings.model.GG_counter.addOccurence();
+            }
+        }
+
+        private void linkCommands(object sender, OnMessageReceivedArgs e)
+        {
+            if (e.ChatMessage.Message.StartsWith($"{Settings.model.commandPrefix}dc") ||
+                e.ChatMessage.Message.StartsWith($"{Settings.model.commandPrefix}discord")
+                )
+            {
+                client.SendMessage(client.JoinedChannels[0], Settings.model.dcLink);
+            }
+
+            if (e.ChatMessage.Message.StartsWith($"{Settings.model.commandPrefix}yt") ||
+                e.ChatMessage.Message.StartsWith($"{Settings.model.commandPrefix}youtube")
+                )
+            {
+                client.SendMessage(client.JoinedChannels[0], Settings.model.ytLink);
             }
         }
 

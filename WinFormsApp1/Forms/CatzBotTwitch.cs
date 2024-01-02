@@ -65,5 +65,11 @@ namespace WinFormsApp1
             editor.ShowDialog();
 
         }
+
+        private void linkCommandsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+           TwitchBot.Forms.CommandLinkEditor editor = new TwitchBot.Forms.CommandLinkEditor();
+            editor.ShowDialog();
+        }
     }
 }

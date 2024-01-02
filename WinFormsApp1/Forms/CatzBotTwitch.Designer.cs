@@ -33,13 +33,14 @@
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.connectionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.moderationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.punishmentsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.checkBox2 = new System.Windows.Forms.CheckBox();
             this.trackBar1 = new System.Windows.Forms.TrackBar();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.moderationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.punishmentsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.linkCommandsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
             this.SuspendLayout();
@@ -80,7 +81,8 @@
             // settingsToolStripMenuItem
             // 
             this.settingsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.connectionToolStripMenuItem});
+            this.connectionToolStripMenuItem,
+            this.linkCommandsToolStripMenuItem});
             this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
             this.settingsToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
             this.settingsToolStripMenuItem.Text = "Settings";
@@ -88,9 +90,24 @@
             // connectionToolStripMenuItem
             // 
             this.connectionToolStripMenuItem.Name = "connectionToolStripMenuItem";
-            this.connectionToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
+            this.connectionToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.connectionToolStripMenuItem.Text = "Connection";
             this.connectionToolStripMenuItem.Click += new System.EventHandler(this.connectionToolStripMenuItem_Click);
+            // 
+            // moderationToolStripMenuItem
+            // 
+            this.moderationToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.punishmentsToolStripMenuItem});
+            this.moderationToolStripMenuItem.Name = "moderationToolStripMenuItem";
+            this.moderationToolStripMenuItem.Size = new System.Drawing.Size(81, 20);
+            this.moderationToolStripMenuItem.Text = "Moderation";
+            // 
+            // punishmentsToolStripMenuItem
+            // 
+            this.punishmentsToolStripMenuItem.Name = "punishmentsToolStripMenuItem";
+            this.punishmentsToolStripMenuItem.Size = new System.Drawing.Size(143, 22);
+            this.punishmentsToolStripMenuItem.Text = "Punishments";
+            this.punishmentsToolStripMenuItem.Click += new System.EventHandler(this.punishmentsToolStripMenuItem_Click);
             // 
             // checkBox1
             // 
@@ -141,20 +158,12 @@
             this.label1.Text = "Levenshtein distance (lower = more similiar)";
             this.label1.Click += new System.EventHandler(this.label1_Click_1);
             // 
-            // moderationToolStripMenuItem
+            // linkCommandsToolStripMenuItem
             // 
-            this.moderationToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.punishmentsToolStripMenuItem});
-            this.moderationToolStripMenuItem.Name = "moderationToolStripMenuItem";
-            this.moderationToolStripMenuItem.Size = new System.Drawing.Size(81, 20);
-            this.moderationToolStripMenuItem.Text = "Moderation";
-            // 
-            // punishmentsToolStripMenuItem
-            // 
-            this.punishmentsToolStripMenuItem.Name = "punishmentsToolStripMenuItem";
-            this.punishmentsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.punishmentsToolStripMenuItem.Text = "Punishments";
-            this.punishmentsToolStripMenuItem.Click += new System.EventHandler(this.punishmentsToolStripMenuItem_Click);
+            this.linkCommandsToolStripMenuItem.Name = "linkCommandsToolStripMenuItem";
+            this.linkCommandsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.linkCommandsToolStripMenuItem.Text = "Link Commands";
+            this.linkCommandsToolStripMenuItem.Click += new System.EventHandler(this.linkCommandsToolStripMenuItem_Click);
             // 
             // Form1
             // 
@@ -196,5 +205,6 @@
         private Label label1;
         private ToolStripMenuItem moderationToolStripMenuItem;
         private ToolStripMenuItem punishmentsToolStripMenuItem;
+        private ToolStripMenuItem linkCommandsToolStripMenuItem;
     }
 }
