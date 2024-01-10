@@ -4,6 +4,10 @@
     {
         public static string[] badwords = File.ReadAllLines("./settings/badwords.txt");
 
+        public static void reloadBadwords()
+        {
+         badwords = File.ReadAllLines("./settings/badwords.txt");
+        }
 
         public static bool containsBadWord(string msg)
         {

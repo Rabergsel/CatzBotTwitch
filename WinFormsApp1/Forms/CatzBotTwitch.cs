@@ -81,5 +81,11 @@ namespace WinFormsApp1
            TwitchBot.Forms.CommandLinkEditor editor = new TwitchBot.Forms.CommandLinkEditor();
             editor.ShowDialog();
         }
+
+        private void badWordEditorToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            TwitchBot.Forms.BadWordEditor editor = new TwitchBot.Forms.BadWordEditor();
+            editor.ShowDialog();
+        }
     }
 }
