@@ -35,6 +35,8 @@ namespace WinFormsApp1
             client.OnMessageReceived += checkMessage;
             client.OnMessageReceived += linkCommands;
 
+            
+
             try
             {
                 api = new TwitchAPI();
@@ -54,6 +56,9 @@ namespace WinFormsApp1
                 Logger.log("API had problems to connect! " + ex, "ERROR");
             }
             client.Connect();
+
+
+            
 
         }
 

@@ -73,6 +73,10 @@
         public bool useDisguisedBadwordDetector { get; set; }
         public int LevenshteinDistanceThreshold { get; set; }
 
+        public bool FollowerChatRelative { get; set; }
+        public int FollowerChatOnSpamValue { get; set; }
+        public int FollowerChatOffSpamValue { get; set; }
+
         public string commandPrefix { get; set; }
 
         [System.Text.Json.Serialization.JsonIgnore]
@@ -81,6 +85,12 @@
         public RateCounter L_counter = new RateCounter();
         [System.Text.Json.Serialization.JsonIgnore]
         public RateCounter GG_counter = new RateCounter();
+
+        [System.Text.Json.Serialization.JsonIgnore]
+        public RateCounter spamCounter = new RateCounter();
+
+        [System.Text.Json.Serialization.JsonIgnore]
+        public RateCounter msgCounter = new RateCounter();
 
 
         public SettingsModel()
@@ -102,6 +112,11 @@
 
             useDisguisedBadwordDetector = true;
             LevenshteinDistanceThreshold = 1;
+
+
+            FollowerChatOffSpamValue = 10;
+            FollowerChatOnSpamValue = 20;
+            FollowerChatRelative = true;
         }
 
 

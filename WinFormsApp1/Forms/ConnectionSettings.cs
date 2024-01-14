@@ -15,13 +15,13 @@
 
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
-            File.WriteAllText("channel.txt", textBox1.Text);
+            
             Settings.model.channel_name = textBox1.Text;
         }
 
         private void textBox2_TextChanged(object sender, EventArgs e)
         {
-            File.WriteAllText("token.txt", textBox2.Text);
+            
             Settings.model.token = textBox2.Text;
         }
 

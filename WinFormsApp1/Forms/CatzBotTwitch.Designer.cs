@@ -36,12 +36,13 @@
             this.linkCommandsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.moderationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.punishmentsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.badWordEditorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.checkBox2 = new System.Windows.Forms.CheckBox();
             this.levenshteinSetter = new System.Windows.Forms.TrackBar();
             this.LevenshteinDisplay = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.badWordEditorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.moderationActionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.levenshteinSetter)).BeginInit();
             this.SuspendLayout();
@@ -91,14 +92,14 @@
             // connectionToolStripMenuItem
             // 
             this.connectionToolStripMenuItem.Name = "connectionToolStripMenuItem";
-            this.connectionToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.connectionToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
             this.connectionToolStripMenuItem.Text = "Connection";
             this.connectionToolStripMenuItem.Click += new System.EventHandler(this.connectionToolStripMenuItem_Click);
             // 
             // linkCommandsToolStripMenuItem
             // 
             this.linkCommandsToolStripMenuItem.Name = "linkCommandsToolStripMenuItem";
-            this.linkCommandsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.linkCommandsToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
             this.linkCommandsToolStripMenuItem.Text = "Link Commands";
             this.linkCommandsToolStripMenuItem.Click += new System.EventHandler(this.linkCommandsToolStripMenuItem_Click);
             // 
@@ -106,7 +107,8 @@
             // 
             this.moderationToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.punishmentsToolStripMenuItem,
-            this.badWordEditorToolStripMenuItem});
+            this.badWordEditorToolStripMenuItem,
+            this.moderationActionToolStripMenuItem});
             this.moderationToolStripMenuItem.Name = "moderationToolStripMenuItem";
             this.moderationToolStripMenuItem.Size = new System.Drawing.Size(81, 20);
             this.moderationToolStripMenuItem.Text = "Moderation";
@@ -117,6 +119,13 @@
             this.punishmentsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.punishmentsToolStripMenuItem.Text = "Punishments";
             this.punishmentsToolStripMenuItem.Click += new System.EventHandler(this.punishmentsToolStripMenuItem_Click);
+            // 
+            // badWordEditorToolStripMenuItem
+            // 
+            this.badWordEditorToolStripMenuItem.Name = "badWordEditorToolStripMenuItem";
+            this.badWordEditorToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.badWordEditorToolStripMenuItem.Text = "Bad Word Editor";
+            this.badWordEditorToolStripMenuItem.Click += new System.EventHandler(this.badWordEditorToolStripMenuItem_Click);
             // 
             // checkBox1
             // 
@@ -167,12 +176,12 @@
             this.label1.Text = "Levenshtein distance (lower = more similiar)";
             this.label1.Click += new System.EventHandler(this.label1_Click_1);
             // 
-            // badWordEditorToolStripMenuItem
+            // moderationActionToolStripMenuItem
             // 
-            this.badWordEditorToolStripMenuItem.Name = "badWordEditorToolStripMenuItem";
-            this.badWordEditorToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.badWordEditorToolStripMenuItem.Text = "Bad Word Editor";
-            this.badWordEditorToolStripMenuItem.Click += new System.EventHandler(this.badWordEditorToolStripMenuItem_Click);
+            this.moderationActionToolStripMenuItem.Name = "moderationActionToolStripMenuItem";
+            this.moderationActionToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.moderationActionToolStripMenuItem.Text = "Moderation Action";
+            this.moderationActionToolStripMenuItem.Click += new System.EventHandler(this.moderationActionToolStripMenuItem_Click);
             // 
             // Form1
             // 
@@ -216,5 +225,6 @@
         private ToolStripMenuItem punishmentsToolStripMenuItem;
         private ToolStripMenuItem linkCommandsToolStripMenuItem;
         private ToolStripMenuItem badWordEditorToolStripMenuItem;
+        private ToolStripMenuItem moderationActionToolStripMenuItem;
     }
 }
