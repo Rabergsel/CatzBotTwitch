@@ -79,6 +79,8 @@
 
         public string commandPrefix { get; set; }
 
+        public bool isFollowerOnlyChatOn { get; set; }
+
         [System.Text.Json.Serialization.JsonIgnore]
         public RateCounter W_counter = new RateCounter();
         [System.Text.Json.Serialization.JsonIgnore]
@@ -117,6 +119,8 @@
             FollowerChatOffSpamValue = 10;
             FollowerChatOnSpamValue = 20;
             FollowerChatRelative = true;
+
+            isFollowerOnlyChatOn = false;
         }
 
 

@@ -34,7 +34,7 @@ namespace WinFormsApp1
             client.OnMessageReceived += stats;
             client.OnMessageReceived += checkMessage;
             client.OnMessageReceived += linkCommands;
-
+            client.OnMessageReceived += checkOnModeratorAction;
             
 
             try
@@ -57,15 +57,94 @@ namespace WinFormsApp1
             }
             client.Connect();
 
+        }
 
-            
+        private void checkOnModeratorAction(object sender, OnMessageReceivedArgs e)
+        {
+            try
+            {
 
+                float rate = (Settings.model.spamCounter.occurencesInTimeSpan(60) / (float)Settings.model.msgCounter.occurencesInTimeSpan(60)) * 100f;
+                float spams = Settings.model.spamCounter.occurencesInTimeSpan(60);
+                bool currentFollwerOn = Settings.model.isFollowerOnlyChatOn;
+
+                
+
+                if(Settings.model.FollowerChatRelative)
+                {
+                    if(!currentFollwerOn & (rate > Settings.model.FollowerChatOnSpamValue))
+                    {
+                        client.FollowersOnlyOn(client.JoinedChannels[0], TimeSpan.FromDays(1));
+                        client.SendMessage(client.JoinedChannels[0], "Follower only chat has been switched on due to high spam rate");
+                        Settings.model.isFollowerOnlyChatOn = true;
+                        api.Helix.Chat.UpdateChatSettingsAsync(Settings.model.broadcasterID, Settings.model.broadcasterID,
+                                new TwitchLib.Api.Helix.Models.Chat.ChatSettings.ChatSettings()
+                                {
+                                    FollowerMode = true,
+                                    FollowerModeDuration = 3600
+                                });
+                        // MessageBox.Show($"Overview:\nRate: {rate}\nspams:{spams}\nSwitched on!");
+                    }
+                    if(currentFollwerOn & (rate < Settings.model.FollowerChatOffSpamValue))
+                    {
+                        client.FollowersOnlyOff(client.JoinedChannels[0]);
+                        client.SendMessage(client.JoinedChannels[0], "Follower only chat has been switched off due to declined spam rate");
+                        Settings.model.isFollowerOnlyChatOn = false;
+                        api.Helix.Chat.UpdateChatSettingsAsync(Settings.model.broadcasterID, Settings.model.broadcasterID,
+                            new TwitchLib.Api.Helix.Models.Chat.ChatSettings.ChatSettings()
+                            {
+                                FollowerMode = false,
+                                FollowerModeDuration = 3600
+                            });
+                        // MessageBox.Show($"Overview:\nRate: {rate}\nspams:{spams}\nSwitched off!");
+                    }
+                }
+                else
+                {
+                    if (!currentFollwerOn & (spams > Settings.model.FollowerChatOnSpamValue))
+                    {
+                        client.FollowersOnlyOn(client.JoinedChannels[0], TimeSpan.FromDays(1));
+                        client.SendMessage(client.JoinedChannels[0], "Follower only chat has been switched on due to high spam rate");
+                        Settings.model.isFollowerOnlyChatOn = true;
+
+                        api.Helix.Chat.UpdateChatSettingsAsync(Settings.model.broadcasterID, Settings.model.broadcasterID,
+                            new TwitchLib.Api.Helix.Models.Chat.ChatSettings.ChatSettings()
+                            {
+                                FollowerMode = true,
+                                FollowerModeDuration = 3600
+                            });
+                        //MessageBox.Show($"Overview:\nRate: {rate}\nspams:{spams}\nSwitched on!");
+                    }
+                    if (currentFollwerOn & (spams < Settings.model.FollowerChatOffSpamValue))
+                    {
+                        client.FollowersOnlyOff(client.JoinedChannels[0]);
+                        client.SendMessage(client.JoinedChannels[0], "Follower only chat has been switched off due to declined spam rate");
+                        Settings.model.isFollowerOnlyChatOn = false;
+                        api.Helix.Chat.UpdateChatSettingsAsync(Settings.model.broadcasterID, Settings.model.broadcasterID,
+                            new TwitchLib.Api.Helix.Models.Chat.ChatSettings.ChatSettings()
+                                {
+                                    FollowerMode = false,
+                                    FollowerModeDuration = 3600
+                                }); 
+
+                        // MessageBox.Show($"Overview:\nRate: {rate}\nspams:{spams}\nSwitched off!");
+                    }
+                }
+
+                //MessageBox.Show($"Ran through:\nRate: {rate}\nspams:{spams}\nFollower On Tick: {Settings.model.isFollowerOnlyChatOn}");
+
+            }
+            catch(Exception ex)
+            {
+               // MessageBox.Show("Exception in Chat mod check: " + ex);
+            }
         }
 
         private void checkMessage(object sender, OnMessageReceivedArgs e)
         {
             try
             {
+                Settings.model.msgCounter.addOccurence();
                 Logger.log("Checking msg " + e.ChatMessage.Message, "DEBUG");
                 var msg = e.ChatMessage.Message.ToLower();
                 bool mustBeDeleted = false;
@@ -92,9 +171,12 @@ namespace WinFormsApp1
                         client.SendMessage(client.JoinedChannels[0], "The broadcaster ID has now been set.\nThis means that the chatfilter is now active!");
                     }
                 }
+
                 if (mustBeDeleted)
                 {
                     api.Helix.Moderation.DeleteChatMessagesAsync(broadcasterID, broadcasterID, e.ChatMessage.Id, Settings.model.APIaccess);
+                    Settings.model.spamCounter.addOccurence();
+
                     var secs = Punishment.punishUser(e.ChatMessage.Username, "BADWORD");
 
                     if (secs == -1)
