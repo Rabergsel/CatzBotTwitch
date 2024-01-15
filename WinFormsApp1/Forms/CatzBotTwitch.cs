@@ -93,5 +93,11 @@ namespace WinFormsApp1
             TwitchBot.Forms.ModActionMenu menu = new TwitchBot.Forms.ModActionMenu();
             menu.ShowDialog();
         }
+
+        private void discordToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var settingsmenu = new TwitchBot.Forms.DiscordSettings();
+            settingsmenu.ShowDialog();
+        }
     }
 }

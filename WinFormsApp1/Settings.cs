@@ -79,7 +79,11 @@
 
         public string commandPrefix { get; set; }
 
+        public string DiscordToken { get; set; }
+
         public bool isFollowerOnlyChatOn { get; set; }
+
+        public ulong DCChannel { get; set; }
 
         [System.Text.Json.Serialization.JsonIgnore]
         public RateCounter W_counter = new RateCounter();
@@ -121,6 +125,9 @@
             FollowerChatRelative = true;
 
             isFollowerOnlyChatOn = false;
+            DiscordToken = "";
+
+            DCChannel = 0;
         }
 
 

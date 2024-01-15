@@ -36,6 +36,13 @@ namespace WinFormsApp1
                 Settings.RunInBackground(TimeSpan.FromSeconds(3), () => outputCounter());
                 Settings.RunInBackground(TimeSpan.FromSeconds(120), () => savePunishments());
                 Settings.RunInBackground(TimeSpan.FromSeconds(30), () => saveSettings());
+                Settings.RunInBackground(TimeSpan.FromSeconds(15), () => sendDCLog());
+
+                if (Settings.model.DiscordToken != "")
+                {
+                    TwitchBot.DC.StartDCBot.StartDCBotAsync();
+                }
+
                 // To customize application configuration such as set high DPI settings or default font,
                 // see https://aka.ms/applicationconfiguration.
                 ApplicationConfiguration.Initialize();
@@ -50,6 +57,10 @@ namespace WinFormsApp1
 
 
 
+        public static void sendDCLog()
+        {
+            TwitchBot.DC.DCManager.SendAccumulator();
+        }
 
         public static void outputCounter()
         {

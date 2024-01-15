@@ -12,8 +12,8 @@ namespace WinFormsApp1
 {
     public class Bot
     {
-        private TwitchClient client;
-        private TwitchAPI api;
+        public static TwitchClient client;
+        public static TwitchAPI api;
         private LiveStreamMonitorService Monitor;
         private Dictionary<string, int> msgCounter = new Dictionary<string, int>();
 
@@ -35,6 +35,7 @@ namespace WinFormsApp1
             client.OnMessageReceived += checkMessage;
             client.OnMessageReceived += linkCommands;
             client.OnMessageReceived += checkOnModeratorAction;
+            client.OnMessageReceived += DCLogger;
             
 
             try
@@ -57,6 +58,12 @@ namespace WinFormsApp1
             }
             client.Connect();
 
+        }
+
+
+        private void DCLogger(object sender, OnMessageReceivedArgs e)
+        {
+            TwitchBot.DC.DCManager.accumulator("CHAT MESSAGE", e.ChatMessage.Username + ":\t" + e.ChatMessage.Message);
         }
 
         private void checkOnModeratorAction(object sender, OnMessageReceivedArgs e)
@@ -84,6 +91,8 @@ namespace WinFormsApp1
                                     FollowerModeDuration = 3600
                                 });
                         // MessageBox.Show($"Overview:\nRate: {rate}\nspams:{spams}\nSwitched on!");
+                        TwitchBot.DC.DCManager.sendEmbed(DSharpPlus.Entities.DiscordColor.Red, "Moderation Action Taken!", "Due to increased spam," +
+                            " the follwer-only chat has been activated. This will go on until the spam rate falls below the specified limit.", "Follwer-Only Chat activated");
                     }
                     if(currentFollwerOn & (rate < Settings.model.FollowerChatOffSpamValue))
                     {
@@ -96,6 +105,8 @@ namespace WinFormsApp1
                                 FollowerMode = false,
                                 FollowerModeDuration = 3600
                             });
+                        TwitchBot.DC.DCManager.sendEmbed(DSharpPlus.Entities.DiscordColor.Green, "Moderation Action Undone!", "The spam rate has fallen significantly, so the follwer-only chat has been deactivated", "Follwer-Chat deactivated");
+
                         // MessageBox.Show($"Overview:\nRate: {rate}\nspams:{spams}\nSwitched off!");
                     }
                 }
@@ -113,6 +124,9 @@ namespace WinFormsApp1
                                 FollowerMode = true,
                                 FollowerModeDuration = 3600
                             });
+
+                        TwitchBot.DC.DCManager.sendEmbed(DSharpPlus.Entities.DiscordColor.Red, "Moderation Action Taken!", "Due to increased spam," +
+                        " the follwer-only chat has been activated. This will go on until the spam rate falls below the specified limit.", "Follwer-Only Chat activated");
                         //MessageBox.Show($"Overview:\nRate: {rate}\nspams:{spams}\nSwitched on!");
                     }
                     if (currentFollwerOn & (spams < Settings.model.FollowerChatOffSpamValue))
@@ -125,7 +139,9 @@ namespace WinFormsApp1
                                 {
                                     FollowerMode = false,
                                     FollowerModeDuration = 3600
-                                }); 
+                                });
+
+                        TwitchBot.DC.DCManager.sendEmbed(DSharpPlus.Entities.DiscordColor.Green, "Moderation Action Undone!", "The spam rate has fallen significantly, so the follwer-only chat has been deactivated", "Follwer-Chat deactivated");
 
                         // MessageBox.Show($"Overview:\nRate: {rate}\nspams:{spams}\nSwitched off!");
                     }
@@ -136,7 +152,8 @@ namespace WinFormsApp1
             }
             catch(Exception ex)
             {
-               // MessageBox.Show("Exception in Chat mod check: " + ex);
+                TwitchBot.DC.DCManager.sendEmbed(DSharpPlus.Entities.DiscordColor.DarkRed, "ERROR WHILE TAKING ACTION", "An error occured while executing the moderation action check!\n\n" + ex, "" +
+                    "Ignored Error, trying to function normally. If this error occures often, please report to the developer!");
             }
         }
 
@@ -182,6 +199,8 @@ namespace WinFormsApp1
                     if (secs == -1)
                     {
                         client.BanUser(client.JoinedChannels[0], e.ChatMessage.Username, "You have violated the rules of this channel to often. You have been banned!");
+                        TwitchBot.DC.DCManager.sendEmbed(DSharpPlus.Entities.DiscordColor.DarkRed, "PUNISHMENT", $"A user has been punished!\nUsername: {e.ChatMessage.Username}\nMessage: {e.ChatMessage.Message}\nReason: BADWORD", "" +
+                        "Banned user for violating the rules to often (set punishment)\nDeleted Message", e.ChatMessage.UserId);
                     }
                     else
                     {
@@ -191,6 +210,8 @@ namespace WinFormsApp1
                             UserId = e.ChatMessage.UserId,
                             Reason = "Penalty for violating rules"
                         }, Settings.model.APIaccess);
+                        TwitchBot.DC.DCManager.sendEmbed(DSharpPlus.Entities.DiscordColor.DarkRed, "PUNISHMENT", $"A user has been punished!\nUsername: {e.ChatMessage.Username}\nMessage: {e.ChatMessage.Message}\nReason: BADWORD", "" +
+                            "Timed out user for "+ secs + " seconds (set punishment)\nDeleted Message", e.ChatMessage.UserId);
                     }
                     Logger.log("Deleting msg \"" + msg + "\" by " + e.ChatMessage.Username, "CHATFILTER");
                     Logger.log("Taking action against " + e.ChatMessage.Username + ":\t" + secs, "ACTION");
@@ -199,6 +220,8 @@ namespace WinFormsApp1
             catch (Exception ex)
             {
                 Logger.log(ex.ToString(), "ERROR");
+                TwitchBot.DC.DCManager.sendEmbed(DSharpPlus.Entities.DiscordColor.DarkRed, "ERROR WHILE CHAT FILTERING", "An error occured while executing the chat filter!\n\n" + ex, "" +
+                    "Ignored Error, trying to function normally. If this error occures often, please report to the developer!");
             }
 
 
@@ -264,7 +287,8 @@ namespace WinFormsApp1
             {
                 var synthesis = new System.Speech.Synthesis.SpeechSynthesizer();
 
-                if (e.ChatMessage.Message.Contains("www."))
+                if (e.ChatMessage.Message.Contains("www.")
+                    || e.ChatMessage.Message.Contains(".com"))
                 {
                     synthesis.Speak(e.ChatMessage.Username + ": URL Link");
                 }
