@@ -18,7 +18,7 @@ It may be that one of your tokens expired. This is usually about every month. Ju
 ### Can my PC run this?
 As long as you have more than some MB of space and more than 100 MB of free RAM, yes!
 
-#Would you buy me a coffee?
+# Would you buy me a coffee?
 Do you like coffee? I do! If this project helped you a lot, I would really appreciate if you would buy me a coffee and give some feedback.
 
 https://www.buymeacoffee.com/raphaelraberger
