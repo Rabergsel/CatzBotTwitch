@@ -71,7 +71,7 @@
             this.Controls.Add(this.OK);
             this.Controls.Add(this.richTextBox1);
             this.Name = "BadWordEditor";
-            this.Text = "BadWordEditor";
+            this.Text = "Bad Word List Editor";
             this.Load += new System.EventHandler(this.BadWordEditor_Load);
             this.ResumeLayout(false);
 

@@ -99,5 +99,26 @@ namespace WinFormsApp1
             var settingsmenu = new TwitchBot.Forms.DiscordSettings();
             settingsmenu.ShowDialog();
         }
+
+        private void createBackupToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                FolderBrowserDialog dialog = new FolderBrowserDialog();
+                dialog.ShowDialog();
+
+                if (dialog.SelectedPath != null)
+                {
+                    TwitchBot.Features.Helper.FileManagement.DirectoryManagement.CopyAll(new DirectoryInfo("./settings"), new DirectoryInfo(dialog.SelectedPath));
+                }
+                MessageBox.Show("Copied all relevant settings. This also includes keys, so do not share this backup with anyone!");
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show("An error occured while backing up. Please report the following error: " + ex);
+            }
+        }
+
+
     }
 }

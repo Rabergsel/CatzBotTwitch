@@ -34,6 +34,7 @@
             this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.connectionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.linkCommandsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.discordToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.moderationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.punishmentsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.badWordEditorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -43,7 +44,8 @@
             this.levenshteinSetter = new System.Windows.Forms.TrackBar();
             this.LevenshteinDisplay = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.discordToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.settingsToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.createBackupToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.levenshteinSetter)).BeginInit();
             this.SuspendLayout();
@@ -86,7 +88,8 @@
             this.settingsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.connectionToolStripMenuItem,
             this.linkCommandsToolStripMenuItem,
-            this.discordToolStripMenuItem});
+            this.discordToolStripMenuItem,
+            this.settingsToolStripMenuItem1});
             this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
             this.settingsToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
             this.settingsToolStripMenuItem.Text = "Settings";
@@ -104,6 +107,13 @@
             this.linkCommandsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.linkCommandsToolStripMenuItem.Text = "Link Commands";
             this.linkCommandsToolStripMenuItem.Click += new System.EventHandler(this.linkCommandsToolStripMenuItem_Click);
+            // 
+            // discordToolStripMenuItem
+            // 
+            this.discordToolStripMenuItem.Name = "discordToolStripMenuItem";
+            this.discordToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.discordToolStripMenuItem.Text = "Discord";
+            this.discordToolStripMenuItem.Click += new System.EventHandler(this.discordToolStripMenuItem_Click);
             // 
             // moderationToolStripMenuItem
             // 
@@ -185,12 +195,20 @@
             this.label1.Text = "Levenshtein distance (lower = more similiar)";
             this.label1.Click += new System.EventHandler(this.label1_Click_1);
             // 
-            // discordToolStripMenuItem
+            // settingsToolStripMenuItem1
             // 
-            this.discordToolStripMenuItem.Name = "discordToolStripMenuItem";
-            this.discordToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.discordToolStripMenuItem.Text = "Discord";
-            this.discordToolStripMenuItem.Click += new System.EventHandler(this.discordToolStripMenuItem_Click);
+            this.settingsToolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.createBackupToolStripMenuItem});
+            this.settingsToolStripMenuItem1.Name = "settingsToolStripMenuItem1";
+            this.settingsToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
+            this.settingsToolStripMenuItem1.Text = "Settings";
+            // 
+            // createBackupToolStripMenuItem
+            // 
+            this.createBackupToolStripMenuItem.Name = "createBackupToolStripMenuItem";
+            this.createBackupToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.createBackupToolStripMenuItem.Text = "Create Backup";
+            this.createBackupToolStripMenuItem.Click += new System.EventHandler(this.createBackupToolStripMenuItem_Click);
             // 
             // Form1
             // 
@@ -236,5 +254,7 @@
         private ToolStripMenuItem badWordEditorToolStripMenuItem;
         private ToolStripMenuItem moderationActionToolStripMenuItem;
         private ToolStripMenuItem discordToolStripMenuItem;
+        private ToolStripMenuItem settingsToolStripMenuItem1;
+        private ToolStripMenuItem createBackupToolStripMenuItem;
     }
 }
