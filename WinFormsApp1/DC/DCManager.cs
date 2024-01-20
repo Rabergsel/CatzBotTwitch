@@ -28,6 +28,11 @@ namespace TwitchBot.DC
                 var msg = new DiscordMessageBuilder();
                 msg.AddEmbed(embed);
                 
+                if(WinFormsApp1.Settings.model.EventModPingRole != 0)
+                {
+                    msg.WithContent($"<@&{WinFormsApp1.Settings.model.EventModPingRole}>");
+                }
+                
                 if(undoTimoutUserID != "")
                 {
                     msg.AddComponents(new DiscordButtonComponent(ButtonStyle.Danger, "undoto_" + undoTimoutUserID, "Undo Timeout/Ban"));

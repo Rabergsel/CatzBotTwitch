@@ -36,7 +36,8 @@ namespace WinFormsApp1
             client.OnMessageReceived += linkCommands;
             client.OnMessageReceived += checkOnModeratorAction;
             client.OnMessageReceived += DCLogger;
-            
+            client.OnMessageReceived += flagWords;
+          
 
             try
             {
@@ -64,6 +65,14 @@ namespace WinFormsApp1
         private void DCLogger(object sender, OnMessageReceivedArgs e)
         {
             TwitchBot.DC.DCManager.accumulator("CHAT MESSAGE", e.ChatMessage.Username + ":\t" + e.ChatMessage.Message);
+        }
+
+        private void flagWords(object sender, OnMessageReceivedArgs e)
+        {
+            if(WinFormsApp1.ChatFilter.containsFlagWord(e.ChatMessage.Message.ToLower()))
+            {
+                TwitchBot.DC.DCManager.sendEmbed(DSharpPlus.Entities.DiscordColor.Yellow, "FLAG WORD", $"The user {e.ChatMessage.Username} used a flagged word.", "No action taken!\nFurther surveillance is adviced!");
+            }
         }
 
         private void checkOnModeratorAction(object sender, OnMessageReceivedArgs e)

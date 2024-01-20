@@ -43,5 +43,10 @@ namespace TwitchBot.Forms
             followChatOnWhen.Value = WinFormsApp1.Settings.model.FollowerChatOnSpamValue;
             followChatOffWhen.Value = WinFormsApp1.Settings.model.FollowerChatOffSpamValue;
         }
+
+        private void OK_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
     }
 }

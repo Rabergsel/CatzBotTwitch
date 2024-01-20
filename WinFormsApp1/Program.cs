@@ -1,3 +1,5 @@
+using GitHubUpdate;
+
 namespace WinFormsApp1
 {
     internal static class Program
@@ -8,6 +10,33 @@ namespace WinFormsApp1
         [STAThread]
         private static void Main()
         {
+            try
+            {
+                var checker = new UpdateChecker("Rabergsel", "CatzBotTwitch"); // uses your Application.ProductVersion
+
+                UpdateType update = checker.CheckUpdate().Result;
+
+                if (update == UpdateType.None)
+                {
+                    // Up to date!
+                    Settings.UpdaterNotice = "Up to date!";
+                }
+                else
+                {
+                    // Ask the user if he wants to update
+                    // You can use the prebuilt form for this if you want (it's really pretty!)
+                    var result = new UpdateNotifyDialog(checker).ShowDialog();
+                    if (result == DialogResult.Yes)
+                    {
+                        checker.DownloadAsset("Release.zip"); // opens it in the user's browser
+                    }
+                }
+            }
+            catch
+            {
+
+            }
+
             try
             {
                 Settings.generateFileStructure();

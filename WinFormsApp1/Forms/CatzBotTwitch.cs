@@ -9,6 +9,8 @@ namespace WinFormsApp1
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            statusStrip1.Text = Settings.UpdaterNotice;
+
             connectionLabel.Text = "Connected to: " + Settings.model.channel_name;
             ttsActivated.Checked = Settings.model.tts;
             checkBox1.Checked = Settings.model.chatfilter;
@@ -61,12 +63,26 @@ namespace WinFormsApp1
         {
 
         }
-
+        static bool levenshteinWarningShown = false;
         private void trackBar1_Scroll(object sender, EventArgs e)
         {
             Settings.model.LevenshteinDistanceThreshold = levenshteinSetter.Value;
             LevenshteinDisplay.Text = levenshteinSetter.Value.ToString();
             Logger.log("Toggled Levenshtein threshold to: " + levenshteinSetter.Value, "SETTINGS");
+
+            if (levenshteinSetter.Value > 5)
+            {
+                if (!levenshteinWarningShown)
+                {
+                    MessageBox.Show("Be aware that a to high value of the Levenshtein Distance may result in harmless words being detected as spam!");
+                    levenshteinWarningShown = true;
+                }
+                levenshteinSetter.BackColor = Color.Red;
+            }
+            else
+            {
+                levenshteinSetter.BackColor = Color.Gray;
+            }
         }
 
         private void punishmentsToolStripMenuItem_Click(object sender, EventArgs e)
@@ -119,6 +135,10 @@ namespace WinFormsApp1
             }
         }
 
-
+        private void flagWordEditorToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var flagedit = new TwitchBot.Forms.FlagWordEditor();
+            flagedit.ShowDialog();
+        }
     }
 }

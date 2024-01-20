@@ -36,6 +36,7 @@
             this.followChatOffWhen = new System.Windows.Forms.NumericUpDown();
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
+            this.OK = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.followChatOnWhen)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.followChatOffWhen)).BeginInit();
             this.SuspendLayout();
@@ -110,11 +111,22 @@
             this.label5.TabIndex = 12;
             this.label5.Text = "are spam";
             // 
+            // OK
+            // 
+            this.OK.Location = new System.Drawing.Point(12, 149);
+            this.OK.Name = "OK";
+            this.OK.Size = new System.Drawing.Size(369, 31);
+            this.OK.TabIndex = 13;
+            this.OK.Text = "OK";
+            this.OK.UseVisualStyleBackColor = true;
+            this.OK.Click += new System.EventHandler(this.OK_Click);
+            // 
             // ModActionMenu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(393, 450);
+            this.ClientSize = new System.Drawing.Size(393, 185);
+            this.Controls.Add(this.OK);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.followChatOffWhen);
@@ -143,5 +155,6 @@
         private NumericUpDown followChatOffWhen;
         private Label label4;
         private Label label5;
+        private Button OK;
     }
 }

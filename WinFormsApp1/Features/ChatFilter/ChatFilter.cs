@@ -3,10 +3,26 @@
     public class ChatFilter
     {
         public static string[] badwords = File.ReadAllLines("./settings/badwords.txt");
+        public static string[] flagwords = File.ReadAllLines("./settings/flagwords.txt");
 
         public static void reloadBadwords()
         {
-         badwords = File.ReadAllLines("./settings/badwords.txt");
+            badwords = File.ReadAllLines("./settings/badwords.txt");
+            flagwords = File.ReadAllLines("./settings/flagword.txt");
+
+        }
+
+        public static bool containsFlagWord(string msg)
+        {
+            foreach (var s in flagwords)
+            {
+                if (msg.ToLower().Contains(s.ToLower()))
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         public static bool containsBadWord(string msg)

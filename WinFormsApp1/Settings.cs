@@ -5,6 +5,7 @@
     {
         public static SettingsModel model { get; set; }
 
+        public static string UpdaterNotice { get; set; }
         public static void save()
         {
             File.WriteAllText("./settings/settings.json", System.Text.Json.JsonSerializer.Serialize(model, typeof(SettingsModel), new System.Text.Json.JsonSerializerOptions()
@@ -85,6 +86,8 @@
 
         public ulong DCChannel { get; set; }
 
+        public ulong EventModPingRole { get; set; }
+
         [System.Text.Json.Serialization.JsonIgnore]
         public RateCounter W_counter = new RateCounter();
         [System.Text.Json.Serialization.JsonIgnore]
@@ -128,6 +131,7 @@
             DiscordToken = "";
 
             DCChannel = 0;
+            EventModPingRole = 0;
         }
 
 
