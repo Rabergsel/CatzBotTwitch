@@ -25,6 +25,9 @@ namespace WinFormsApp1
                 MessagesAllowedInPeriod = 750,
                 ThrottlingPeriod = TimeSpan.FromSeconds(30)
             };
+
+
+
             WebSocketClient customClient = new WebSocketClient(clientOptions);
             client = new TwitchClient(customClient);
             client.Initialize(credentials, Settings.model.channel_name);
@@ -34,10 +37,11 @@ namespace WinFormsApp1
             client.OnMessageReceived += stats;
             client.OnMessageReceived += checkMessage;
             client.OnMessageReceived += linkCommands;
-            client.OnMessageReceived += checkOnModeratorAction;
+            
             client.OnMessageReceived += DCLogger;
             client.OnMessageReceived += flagWords;
-          
+
+            Settings.RunInBackground(TimeSpan.FromSeconds(5), () => checkOnModeratorAction());
 
             try
             {
@@ -46,10 +50,20 @@ namespace WinFormsApp1
                 api.Settings.AccessToken = Settings.model.APIaccess;
 
 
+
+
                 Monitor = new LiveStreamMonitorService(api, 20);
                 List<string> lst = new List<string> { Settings.model.channel_name };
                 Monitor.SetChannelsByName(lst);
                 Monitor.Start();
+
+                Settings.model.isFollowerOnlyChatOn = false;
+                api.Helix.Chat.UpdateChatSettingsAsync(Settings.model.broadcasterID, Settings.model.broadcasterID,
+                    new TwitchLib.Api.Helix.Models.Chat.ChatSettings.ChatSettings()
+                    {
+                        FollowerMode = false,
+                        FollowerModeDuration = 3600
+                    });
 
                 Logger.log("API started without any problems!", "SYSTEM");
             }
@@ -75,8 +89,9 @@ namespace WinFormsApp1
             }
         }
 
-        private void checkOnModeratorAction(object sender, OnMessageReceivedArgs e)
+        private void checkOnModeratorAction()
         {
+            System.Diagnostics.Debug.WriteLine("Checking action");
             try
             {
 
@@ -85,10 +100,11 @@ namespace WinFormsApp1
                 bool currentFollwerOn = Settings.model.isFollowerOnlyChatOn;
 
                 
+                
 
                 if(Settings.model.FollowerChatRelative)
                 {
-                    if(!currentFollwerOn & (rate > Settings.model.FollowerChatOnSpamValue))
+                    if(!currentFollwerOn & (rate > Settings.model.FollowerChatOnSpamValue) & spams != 0)
                     {
                         client.FollowersOnlyOn(client.JoinedChannels[0], TimeSpan.FromDays(1));
                         client.SendMessage(client.JoinedChannels[0], "Follower only chat has been switched on due to high spam rate");
@@ -121,7 +137,7 @@ namespace WinFormsApp1
                 }
                 else
                 {
-                    if (!currentFollwerOn & (spams > Settings.model.FollowerChatOnSpamValue))
+                    if (!currentFollwerOn & (spams > Settings.model.FollowerChatOnSpamValue) & spams != 0)
                     {
                         client.FollowersOnlyOn(client.JoinedChannels[0], TimeSpan.FromDays(1));
                         client.SendMessage(client.JoinedChannels[0], "Follower only chat has been switched on due to high spam rate");
@@ -168,6 +184,8 @@ namespace WinFormsApp1
 
         private void checkMessage(object sender, OnMessageReceivedArgs e)
         {
+            
+
             try
             {
                 Settings.model.msgCounter.addOccurence();
@@ -187,6 +205,7 @@ namespace WinFormsApp1
 
                 string broadcasterID = Settings.model.broadcasterID;
 
+                Settings.getChatMsgs = $"[{e.ChatMessage.Username}] [SPAM = {mustBeDeleted}]\n{e.ChatMessage.Message}\n\n" + Settings.getChatMsgs;
 
                 if (Settings.model.botIsBroadcaster & e.ChatMessage.IsBroadcaster)
                 {
@@ -287,14 +306,14 @@ namespace WinFormsApp1
                 msgCounter.Add(e.ChatMessage.Username, 0);
             }
         }
-
+        static System.Speech.Synthesis.SpeechSynthesizer synthesis = new System.Speech.Synthesis.SpeechSynthesizer();
         private void TTSMsg(object sender, OnMessageReceivedArgs e)
         {
             if (Settings.model.tts
                 & !e.ChatMessage.Message.StartsWith(Settings.model.commandPrefix)
                 )
             {
-                var synthesis = new System.Speech.Synthesis.SpeechSynthesizer();
+                
 
                 if (e.ChatMessage.Message.Contains("www.")
                     || e.ChatMessage.Message.Contains(".com"))
@@ -311,7 +330,14 @@ namespace WinFormsApp1
                 }
                 else
                 {
-                    synthesis.Speak(e.ChatMessage.Username + ": " + e.ChatMessage.Message);
+
+
+                    if (synthesis.State != System.Speech.Synthesis.SynthesizerState.Speaking)
+                    {
+                        Settings.lastTTSmessage = e.ChatMessage.Message;
+                        Settings.lastTTSauthor = e.ChatMessage.Username;
+                        synthesis.SpeakAsync(e.ChatMessage.Username + ": " + e.ChatMessage.Message);
+                    }
                 }
                 
                 

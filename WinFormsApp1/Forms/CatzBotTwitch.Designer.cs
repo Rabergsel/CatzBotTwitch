@@ -40,6 +40,7 @@
             this.moderationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.punishmentsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.badWordEditorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.flagWordEditorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.moderationActionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.checkBox2 = new System.Windows.Forms.CheckBox();
@@ -47,7 +48,7 @@
             this.LevenshteinDisplay = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-            this.flagWordEditorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.panelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.levenshteinSetter)).BeginInit();
             this.SuspendLayout();
@@ -78,7 +79,8 @@
             this.menuStrip1.BackColor = System.Drawing.SystemColors.AppWorkspace;
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.settingsToolStripMenuItem,
-            this.moderationToolStripMenuItem});
+            this.moderationToolStripMenuItem,
+            this.panelToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(299, 24);
@@ -99,21 +101,27 @@
             // connectionToolStripMenuItem
             // 
             this.connectionToolStripMenuItem.Name = "connectionToolStripMenuItem";
-            this.connectionToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
+            this.connectionToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Alt) 
+            | System.Windows.Forms.Keys.C)));
+            this.connectionToolStripMenuItem.Size = new System.Drawing.Size(226, 22);
             this.connectionToolStripMenuItem.Text = "Connection";
             this.connectionToolStripMenuItem.Click += new System.EventHandler(this.connectionToolStripMenuItem_Click);
             // 
             // linkCommandsToolStripMenuItem
             // 
             this.linkCommandsToolStripMenuItem.Name = "linkCommandsToolStripMenuItem";
-            this.linkCommandsToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
+            this.linkCommandsToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Alt) 
+            | System.Windows.Forms.Keys.L)));
+            this.linkCommandsToolStripMenuItem.Size = new System.Drawing.Size(226, 22);
             this.linkCommandsToolStripMenuItem.Text = "Link Commands";
             this.linkCommandsToolStripMenuItem.Click += new System.EventHandler(this.linkCommandsToolStripMenuItem_Click);
             // 
             // discordToolStripMenuItem
             // 
             this.discordToolStripMenuItem.Name = "discordToolStripMenuItem";
-            this.discordToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
+            this.discordToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Alt) 
+            | System.Windows.Forms.Keys.D)));
+            this.discordToolStripMenuItem.Size = new System.Drawing.Size(226, 22);
             this.discordToolStripMenuItem.Text = "Discord";
             this.discordToolStripMenuItem.Click += new System.EventHandler(this.discordToolStripMenuItem_Click);
             // 
@@ -122,13 +130,15 @@
             this.settingsToolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.createBackupToolStripMenuItem});
             this.settingsToolStripMenuItem1.Name = "settingsToolStripMenuItem1";
-            this.settingsToolStripMenuItem1.Size = new System.Drawing.Size(161, 22);
+            this.settingsToolStripMenuItem1.Size = new System.Drawing.Size(226, 22);
             this.settingsToolStripMenuItem1.Text = "Settings";
             // 
             // createBackupToolStripMenuItem
             // 
             this.createBackupToolStripMenuItem.Name = "createBackupToolStripMenuItem";
-            this.createBackupToolStripMenuItem.Size = new System.Drawing.Size(150, 22);
+            this.createBackupToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Alt) 
+            | System.Windows.Forms.Keys.B)));
+            this.createBackupToolStripMenuItem.Size = new System.Drawing.Size(216, 22);
             this.createBackupToolStripMenuItem.Text = "Create Backup";
             this.createBackupToolStripMenuItem.Click += new System.EventHandler(this.createBackupToolStripMenuItem_Click);
             // 
@@ -146,21 +156,32 @@
             // punishmentsToolStripMenuItem
             // 
             this.punishmentsToolStripMenuItem.Name = "punishmentsToolStripMenuItem";
-            this.punishmentsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.punishmentsToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.P)));
+            this.punishmentsToolStripMenuItem.Size = new System.Drawing.Size(215, 22);
             this.punishmentsToolStripMenuItem.Text = "Punishments";
             this.punishmentsToolStripMenuItem.Click += new System.EventHandler(this.punishmentsToolStripMenuItem_Click);
             // 
             // badWordEditorToolStripMenuItem
             // 
             this.badWordEditorToolStripMenuItem.Name = "badWordEditorToolStripMenuItem";
-            this.badWordEditorToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.badWordEditorToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.B)));
+            this.badWordEditorToolStripMenuItem.Size = new System.Drawing.Size(215, 22);
             this.badWordEditorToolStripMenuItem.Text = "Bad Word Editor";
             this.badWordEditorToolStripMenuItem.Click += new System.EventHandler(this.badWordEditorToolStripMenuItem_Click);
+            // 
+            // flagWordEditorToolStripMenuItem
+            // 
+            this.flagWordEditorToolStripMenuItem.Name = "flagWordEditorToolStripMenuItem";
+            this.flagWordEditorToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.F)));
+            this.flagWordEditorToolStripMenuItem.Size = new System.Drawing.Size(215, 22);
+            this.flagWordEditorToolStripMenuItem.Text = "Flag Word Editor";
+            this.flagWordEditorToolStripMenuItem.Click += new System.EventHandler(this.flagWordEditorToolStripMenuItem_Click);
             // 
             // moderationActionToolStripMenuItem
             // 
             this.moderationActionToolStripMenuItem.Name = "moderationActionToolStripMenuItem";
-            this.moderationActionToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.moderationActionToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.M)));
+            this.moderationActionToolStripMenuItem.Size = new System.Drawing.Size(215, 22);
             this.moderationActionToolStripMenuItem.Text = "Moderation Action";
             this.moderationActionToolStripMenuItem.Click += new System.EventHandler(this.moderationActionToolStripMenuItem_Click);
             // 
@@ -221,12 +242,12 @@
             this.statusStrip1.TabIndex = 8;
             this.statusStrip1.Text = "statusStrip1";
             // 
-            // flagWordEditorToolStripMenuItem
+            // panelToolStripMenuItem
             // 
-            this.flagWordEditorToolStripMenuItem.Name = "flagWordEditorToolStripMenuItem";
-            this.flagWordEditorToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.flagWordEditorToolStripMenuItem.Text = "Flag Word Editor";
-            this.flagWordEditorToolStripMenuItem.Click += new System.EventHandler(this.flagWordEditorToolStripMenuItem_Click);
+            this.panelToolStripMenuItem.Name = "panelToolStripMenuItem";
+            this.panelToolStripMenuItem.Size = new System.Drawing.Size(48, 20);
+            this.panelToolStripMenuItem.Text = "Panel";
+            this.panelToolStripMenuItem.Click += new System.EventHandler(this.panelToolStripMenuItem_Click);
             // 
             // Form1
             // 
@@ -277,5 +298,6 @@
         private ToolStripMenuItem createBackupToolStripMenuItem;
         private StatusStrip statusStrip1;
         private ToolStripMenuItem flagWordEditorToolStripMenuItem;
+        private ToolStripMenuItem panelToolStripMenuItem;
     }
 }

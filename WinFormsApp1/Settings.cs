@@ -6,6 +6,13 @@
         public static SettingsModel model { get; set; }
 
         public static string UpdaterNotice { get; set; }
+
+        public static string lastTTSmessage { get; set; } = "None";
+        public static string lastTTSauthor { get; set; } = "Unknown";
+
+        public static string getChatMsgs { get; set; } = "[Chat Start]";
+        
+
         public static void save()
         {
             File.WriteAllText("./settings/settings.json", System.Text.Json.JsonSerializer.Serialize(model, typeof(SettingsModel), new System.Text.Json.JsonSerializerOptions()

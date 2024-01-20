@@ -140,5 +140,11 @@ namespace WinFormsApp1
             var flagedit = new TwitchBot.Forms.FlagWordEditor();
             flagedit.ShowDialog();
         }
+
+        private void panelToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var panel = new TwitchBot.Forms.ManagerPanel();
+            panel.Show();
+        }
     }
 }
