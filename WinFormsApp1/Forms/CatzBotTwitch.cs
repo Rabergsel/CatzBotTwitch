@@ -26,6 +26,7 @@ namespace WinFormsApp1
         private void ttsActivated_CheckedChanged(object sender, EventArgs e)
         {
             Settings.model.tts = ttsActivated.Checked;
+            if (ttsActivated.Checked) checkBox3.Checked = false;
         }
 
         private void connectionToolStripMenuItem_Click(object sender, EventArgs e)
@@ -47,6 +48,7 @@ namespace WinFormsApp1
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
             Settings.model.chatfilter = checkBox1.Checked;
+
             Logger.log("Toggled chatfilter to: " + checkBox1.Checked, "SETTINGS");
         }
 
@@ -145,6 +147,12 @@ namespace WinFormsApp1
         {
             var panel = new TwitchBot.Forms.ManagerPanel();
             panel.Show();
+        }
+
+        private void checkBox3_CheckedChanged(object sender, EventArgs e)
+        {
+            Settings.model.tts_OnlyMod = checkBox3.Checked;
+            if (checkBox3.Checked) ttsActivated.Checked = false;
         }
     }
 }

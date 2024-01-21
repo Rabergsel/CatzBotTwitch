@@ -41,6 +41,9 @@
             this.lastTTSAuthor = new System.Windows.Forms.Label();
             this.followerChat = new System.Windows.Forms.Label();
             this.chat = new System.Windows.Forms.RichTextBox();
+            this.spamIndicator = new System.Windows.Forms.TrackBar();
+            this.button1 = new System.Windows.Forms.Button();
+            ((System.ComponentModel.ISupportInitialize)(this.spamIndicator)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -167,7 +170,7 @@
             this.followerChat.AutoSize = true;
             this.followerChat.Font = new System.Drawing.Font("Siemens AD Sans", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.followerChat.ForeColor = System.Drawing.Color.Lime;
-            this.followerChat.Location = new System.Drawing.Point(58, 164);
+            this.followerChat.Location = new System.Drawing.Point(58, 167);
             this.followerChat.Name = "followerChat";
             this.followerChat.Size = new System.Drawing.Size(211, 29);
             this.followerChat.TabIndex = 12;
@@ -186,12 +189,33 @@
             this.chat.Text = "";
             this.chat.TextChanged += new System.EventHandler(this.chat_TextChanged);
             // 
+            // spamIndicator
+            // 
+            this.spamIndicator.Location = new System.Drawing.Point(58, 119);
+            this.spamIndicator.Name = "spamIndicator";
+            this.spamIndicator.Size = new System.Drawing.Size(152, 45);
+            this.spamIndicator.TabIndex = 14;
+            // 
+            // button1
+            // 
+            this.button1.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.button1.ForeColor = System.Drawing.SystemColors.ButtonFace;
+            this.button1.Location = new System.Drawing.Point(27, 330);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(33, 189);
+            this.button1.TabIndex = 15;
+            this.button1.Text = "TTS";
+            this.button1.UseVisualStyleBackColor = false;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // ManagerPanel
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.ClientSize = new System.Drawing.Size(1283, 618);
+            this.Controls.Add(this.button1);
+            this.Controls.Add(this.spamIndicator);
             this.Controls.Add(this.chat);
             this.Controls.Add(this.followerChat);
             this.Controls.Add(this.lastTTSAuthor);
@@ -208,6 +232,7 @@
             this.Name = "ManagerPanel";
             this.Text = "ManagerPanel";
             this.Load += new System.EventHandler(this.ManagerPanel_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.spamIndicator)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -228,5 +253,7 @@
         private Label lastTTSAuthor;
         private Label followerChat;
         private RichTextBox chat;
+        private TrackBar spamIndicator;
+        private Button button1;
     }
 }

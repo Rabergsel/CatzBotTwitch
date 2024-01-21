@@ -306,14 +306,15 @@ namespace WinFormsApp1
                 msgCounter.Add(e.ChatMessage.Username, 0);
             }
         }
+
         static System.Speech.Synthesis.SpeechSynthesizer synthesis = new System.Speech.Synthesis.SpeechSynthesizer();
         private void TTSMsg(object sender, OnMessageReceivedArgs e)
         {
-            if (Settings.model.tts
+            if ((Settings.model.tts | Settings.model.tts_OnlyMod)
                 & !e.ChatMessage.Message.StartsWith(Settings.model.commandPrefix)
                 )
             {
-                
+                if (Settings.model.tts_OnlyMod & (e.ChatMessage.UserType == TwitchLib.Client.Enums.UserType.Viewer)) return;
 
                 if (e.ChatMessage.Message.Contains("www.")
                     || e.ChatMessage.Message.Contains(".com"))
@@ -324,14 +325,12 @@ namespace WinFormsApp1
                 {
                     //Leave empty, don't read!
                 }
-                else if(e.ChatMessage.Message.Length > 150)
+                else if(e.ChatMessage.Message.Length > 200)
                 {
                     synthesis.Speak(e.ChatMessage.Username + ": Long Message");
                 }
                 else
                 {
-
-
                     if (synthesis.State != System.Speech.Synthesis.SynthesizerState.Speaking)
                     {
                         Settings.lastTTSmessage = e.ChatMessage.Message;

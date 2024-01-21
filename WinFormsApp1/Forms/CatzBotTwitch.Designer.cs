@@ -42,13 +42,14 @@
             this.badWordEditorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.flagWordEditorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.moderationActionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.panelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.checkBox2 = new System.Windows.Forms.CheckBox();
             this.levenshteinSetter = new System.Windows.Forms.TrackBar();
             this.LevenshteinDisplay = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-            this.panelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.checkBox3 = new System.Windows.Forms.CheckBox();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.levenshteinSetter)).BeginInit();
             this.SuspendLayout();
@@ -185,6 +186,13 @@
             this.moderationActionToolStripMenuItem.Text = "Moderation Action";
             this.moderationActionToolStripMenuItem.Click += new System.EventHandler(this.moderationActionToolStripMenuItem_Click);
             // 
+            // panelToolStripMenuItem
+            // 
+            this.panelToolStripMenuItem.Name = "panelToolStripMenuItem";
+            this.panelToolStripMenuItem.Size = new System.Drawing.Size(48, 20);
+            this.panelToolStripMenuItem.Text = "Panel";
+            this.panelToolStripMenuItem.Click += new System.EventHandler(this.panelToolStripMenuItem_Click);
+            // 
             // checkBox1
             // 
             this.checkBox1.AutoSize = true;
@@ -242,12 +250,16 @@
             this.statusStrip1.TabIndex = 8;
             this.statusStrip1.Text = "statusStrip1";
             // 
-            // panelToolStripMenuItem
+            // checkBox3
             // 
-            this.panelToolStripMenuItem.Name = "panelToolStripMenuItem";
-            this.panelToolStripMenuItem.Size = new System.Drawing.Size(48, 20);
-            this.panelToolStripMenuItem.Text = "Panel";
-            this.panelToolStripMenuItem.Click += new System.EventHandler(this.panelToolStripMenuItem_Click);
+            this.checkBox3.AutoSize = true;
+            this.checkBox3.Location = new System.Drawing.Point(155, 74);
+            this.checkBox3.Name = "checkBox3";
+            this.checkBox3.Size = new System.Drawing.Size(132, 19);
+            this.checkBox3.TabIndex = 9;
+            this.checkBox3.Text = "TTS (exlude viewers)";
+            this.checkBox3.UseVisualStyleBackColor = true;
+            this.checkBox3.CheckedChanged += new System.EventHandler(this.checkBox3_CheckedChanged);
             // 
             // Form1
             // 
@@ -255,6 +267,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlDarkDark;
             this.ClientSize = new System.Drawing.Size(299, 420);
+            this.Controls.Add(this.checkBox3);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.LevenshteinDisplay);
@@ -299,5 +312,6 @@
         private StatusStrip statusStrip1;
         private ToolStripMenuItem flagWordEditorToolStripMenuItem;
         private ToolStripMenuItem panelToolStripMenuItem;
+        private CheckBox checkBox3;
     }
 }

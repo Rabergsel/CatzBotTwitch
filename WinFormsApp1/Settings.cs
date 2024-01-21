@@ -11,6 +11,8 @@
         public static string lastTTSauthor { get; set; } = "Unknown";
 
         public static string getChatMsgs { get; set; } = "[Chat Start]";
+
+
         
 
         public static void save()
@@ -70,6 +72,8 @@
         public string APIaccess { get; set; }
 
         public bool tts { get; set; }
+
+        public bool tts_OnlyMod { get; set; } = false;
         public bool chatfilter { get; set; }
         public bool botIsBroadcaster { get; set; }
         public string broadcasterID { get; set; }

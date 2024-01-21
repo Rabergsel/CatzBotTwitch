@@ -32,15 +32,28 @@ namespace TwitchBot.Forms
 
         private void updateStats(object sender, EventArgs e)
         {
+            spamIndicator.Minimum = WinFormsApp1.Settings.model.FollowerChatOffSpamValue;
+            spamIndicator.Maximum = WinFormsApp1.Settings.model.FollowerChatOnSpamValue;
+
             if (showRelative.Checked)
             {
                 spamUnit.Text = "%";
-                spamRate.Text = (Math.Round(Convert.ToSingle(WinFormsApp1.Settings.model.spamCounter.occurencesInTimeSpan(60)) / Convert.ToSingle(WinFormsApp1.Settings.model.msgCounter.occurencesInTimeSpan(60)), 4) *100).ToString();
+                var rate = (Math.Round(Convert.ToSingle(WinFormsApp1.Settings.model.spamCounter.occurencesInTimeSpan(60)) / Convert.ToSingle(WinFormsApp1.Settings.model.msgCounter.occurencesInTimeSpan(60)), 4) * 100);
+                spamRate.Text = rate.ToString();
+                spamIndicator.Value = Math.Min(Math.Max((int)rate, spamIndicator.Minimum), spamIndicator.Maximum);
+                if (rate < spamIndicator.Minimum) spamIndicator.BackColor = Color.DarkGreen;
+                else if (rate > spamIndicator.Maximum) spamIndicator.BackColor = Color.DarkRed;
+                else spamIndicator.BackColor = Color.Yellow;
             }
             else
             {
                 spamUnit.Text = "msg/min";
-                spamRate.Text = WinFormsApp1.Settings.model.spamCounter.occurencesInTimeSpan(60).ToString();
+                var rate = WinFormsApp1.Settings.model.spamCounter.occurencesInTimeSpan(60);
+                spamRate.Text = rate.ToString();
+                spamIndicator.Value = Math.Min(Math.Max((int)rate, spamIndicator.Minimum), spamIndicator.Maximum);
+                if (rate < spamIndicator.Minimum) spamIndicator.BackColor = Color.DarkGreen;
+                else if (rate > spamIndicator.Maximum) spamIndicator.BackColor = Color.DarkRed;
+                else spamIndicator.BackColor = Color.Yellow;
             }
 
             if(chatActivityTotal.Checked)
@@ -61,11 +74,17 @@ namespace TwitchBot.Forms
             else { followerChat.Text = "Follower Chat Off"; followerChat.ForeColor = Color.Lime; }
 
             chat.Text = WinFormsApp1.Settings.getChatMsgs;
+
+
+            if (WinFormsApp1.Settings.model.tts) { }
+            else { lastTTS.BackColor = Color.DarkRed; lastTTS.Text = "Deactivated TTS"; }
+
         }
 
         private void spamRate_Click(object sender, EventArgs e)
         {
-
+            ModActionMenu menu = new ModActionMenu();
+            menu.ShowDialog();
            
         }
 
@@ -93,5 +112,15 @@ namespace TwitchBot.Forms
         {
 
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            WinFormsApp1.Settings.model.tts = !WinFormsApp1.Settings.model.tts;
+
+            if (WinFormsApp1.Settings.model.tts) { lastTTS.BackColor = Color.Black; }
+            else if (WinFormsApp1.Settings.model.tts_OnlyMod) { lastTTS.BackColor = Color.DarkBlue; }
+            else { lastTTS.BackColor = Color.DarkRed; }
+        }
+
     }
 }
