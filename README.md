@@ -7,7 +7,7 @@ Visit the projects wiki for a lot more detailed information: https://github.com/
 
 If you got an idea what should be added, please open an issue here on github with the title beginning with "Feature Request" or "FR:", or head over to my discord server.
 
-![Image of Bot Start GUI](/imgs/StartGUI.jpg?raw=true "Start GUI")
+![Image of Bot Start GUI](/imgs/StartGUI.PNG?raw=true "Start GUI")
 
 # Troubleshooting and Q&A
 
