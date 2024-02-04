@@ -67,6 +67,8 @@ namespace WinFormsApp1
                 Settings.RunInBackground(TimeSpan.FromSeconds(30), () => saveSettings());
                 Settings.RunInBackground(TimeSpan.FromSeconds(15), () => sendDCLog());
 
+                Settings.RunInBackground(TimeSpan.FromSeconds(30), () => screenUsers());
+
                 if (Settings.model.DiscordToken != "")
                 {
                     TwitchBot.DC.StartDCBot.StartDCBotAsync();
@@ -81,6 +83,8 @@ namespace WinFormsApp1
             {
                 Logger.log("ERROR: " + ex, "CRASH");
                 MessageBox.Show("It seems like an error occured:\n" + ex + "\n\nPlease report this error with your logfile to the developers. They may help you!");
+                var connection = new WinFormsApp1.ConnectionSettings();
+                connection.ShowDialog();
             }
         }
 
@@ -88,7 +92,8 @@ namespace WinFormsApp1
 
         public static void sendDCLog()
         {
-            TwitchBot.DC.DCManager.SendAccumulator();
+            if(!Settings.model.scanFollowers) TwitchBot.DC.DCManager.SendAccumulator();
+
         }
 
         public static void outputCounter()
@@ -105,6 +110,11 @@ namespace WinFormsApp1
             string text = Punishment.save();
             File.WriteAllText("./files/punishedUsers.txt", text);
             Logger.log("Saved all punishments ( =" + text.Length + " bytes)", "SYSTEM");
+        }
+
+        public static void screenUsers()
+        {
+            TwitchBot.Features.UsernameControl.Screening.screen(ref Bot.api, Settings.model.channel_name);
         }
 
         public static void saveSettings()

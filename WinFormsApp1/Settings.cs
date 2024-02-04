@@ -73,6 +73,9 @@
 
         public bool tts { get; set; }
 
+        public float RandomThreshold { get; set; } = 0.2f;
+        public int RandomMinimumLength { get; set; } = 6;
+
         public bool tts_OnlyMod { get; set; } = false;
         public bool chatfilter { get; set; }
         public bool botIsBroadcaster { get; set; }
@@ -96,6 +99,10 @@
         public bool isFollowerOnlyChatOn { get; set; }
 
         public ulong DCChannel { get; set; }
+
+        public List<string> suspiciosUsernames { get; set; } = new List<string>();
+
+        public bool scanFollowers = false;
 
         public ulong EventModPingRole { get; set; }
 

@@ -16,6 +16,8 @@ namespace WinFormsApp1
             checkBox1.Checked = Settings.model.chatfilter;
             checkBox2.Checked = Settings.model.useDisguisedBadwordDetector;
 
+            checkBox4.Checked = Settings.model.scanFollowers;
+
             levenshteinSetter.Value = Settings.model.LevenshteinDistanceThreshold;
             LevenshteinDisplay.Text = Settings.model.LevenshteinDistanceThreshold.ToString();
 
@@ -153,6 +155,11 @@ namespace WinFormsApp1
         {
             Settings.model.tts_OnlyMod = checkBox3.Checked;
             if (checkBox3.Checked) ttsActivated.Checked = false;
+        }
+
+        private void checkBox4_CheckedChanged(object sender, EventArgs e)
+        {
+            Settings.model.scanFollowers = checkBox4.Checked;
         }
     }
 }
