@@ -47,5 +47,14 @@ namespace TwitchBot.DC
             WinFormsApp1.Settings.model.EventModPingRole = role.Id;
             ctx.CreateResponseAsync("The ping has been set!");
         }
+
+        [SlashCommand("SetAsCrosschat", "Sets the current channel as Mirror Chat")]
+        [SlashCommandPermissions(Permissions.Administrator)]
+        public async Task CrossChat(InteractionContext ctx)
+        {
+            WinFormsApp1.Settings.model.CrossChatChannel = ctx.Channel.Id;
+            ctx.CreateResponseAsync("This chat is now the crosschat for twitch and discord. (Currently, only the twitch chat is mirrored.");
+        }
+
     }
 }

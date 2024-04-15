@@ -41,6 +41,8 @@ namespace WinFormsApp1
             client.OnMessageReceived += DCLogger;
             client.OnMessageReceived += flagWords;
 
+            client.OnMessageReceived += CrossChat;
+
             Settings.RunInBackground(TimeSpan.FromSeconds(5), () => checkOnModeratorAction());
 
             try
@@ -76,9 +78,16 @@ namespace WinFormsApp1
         }
 
 
+        private void CrossChat(object sender, OnMessageReceivedArgs e)
+        {
+            TwitchBot.DC.DCManager.sendMessageAsWebhook(e.ChatMessage.Message, e.ChatMessage.Username);
+            
+        }
+
         private void DCLogger(object sender, OnMessageReceivedArgs e)
         {
             TwitchBot.DC.DCManager.accumulator("CHAT MESSAGE", e.ChatMessage.Username + ":\t" + e.ChatMessage.Message);
+            
         }
 
         private void flagWords(object sender, OnMessageReceivedArgs e)

@@ -100,6 +100,8 @@
 
         public ulong DCChannel { get; set; }
 
+        public ulong CrossChatChannel { get; set; } = 0;
+
         public List<string> suspiciosUsernames { get; set; } = new List<string>();
 
         public bool scanFollowers = false;

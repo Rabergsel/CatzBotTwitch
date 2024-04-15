@@ -14,6 +14,39 @@ namespace TwitchBot.DC
     {
         static string accu = "";
 
+        static DiscordWebhook webhook = null;
+
+        public static void sendMessageAsWebhook(string message, string author)
+        {
+            try
+            {
+                DiscordChannel channel;
+
+
+               if(WinFormsApp1.Settings.model.CrossChatChannel != 0)
+                {
+                    channel = Presence.presence.GetChannelAsync(WinFormsApp1.Settings.model.CrossChatChannel).Result;
+
+
+                    if (webhook == null)
+                    {
+                         webhook = channel.CreateWebhookAsync("Crosschat").Result;
+                    }
+
+                    var msg = new DiscordWebhookBuilder()
+                        .WithContent(message)
+                        .WithUsername(author)
+                        .SendAsync(webhook)
+                        .Result;
+
+                }
+            }
+            catch(Exception ex)
+            {
+                accumulator("ERROR", "Crosschat did not work: " + ex);
+            }
+        }
+
         public static void sendEmbed(DiscordColor color, string title, string content, string action, string undoTimoutUserID = "")
         {
             try
