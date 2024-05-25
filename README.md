@@ -1,4 +1,7 @@
 # CatzBot for Twitch
+
+#There is a new one: https://github.com/Rabergsel/TwitchBotV2
+
 A simple chat bot for Twitch
 
 Get Support here: https://discord.com/invite/r9jCkyq4bG
